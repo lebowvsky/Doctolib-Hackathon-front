@@ -1,17 +1,15 @@
 import React from 'react';
 
 import style from './patient.module.css';
+import ButtonNow from './ButtonNow';
+import ButtonPast from './ButtonPast';
 
-export default function Patient({ patient, display, onClick }) {
+export default function Patient({ patient }) {
   return (
     <div className={style.container}>
-      <div>{patient}</div>
-      <div className={display ? style.open : style.close} onClick={onClick}>
-        now
-      </div>
-      <div className={display ? style.open : style.close} onClick={onClick}>
-        past
-      </div>
+      <h2 className={style.patient}>{patient}</h2>
+      <ButtonNow />
+      <ButtonPast />
     </div>
   );
 }
