@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Patient from './Patient';
 
 const PATIENTS = [
@@ -13,8 +13,22 @@ const PATIENTS = [
 const MyPatients = () => {
   const date = new Date().toLocaleDateString();
   const time = new Date().toLocaleTimeString();
+
+  const [display, setDisplay] = useState(false);
+
+  const handleDisplay = () => {
+    setDisplay(!display);
+  };
+
   const patients = PATIENTS.map((patient) => {
-    return <Patient patient={patient.name} key={patient.id} />;
+    return (
+      <Patient
+        patient={patient.name}
+        key={patient.id}
+        display={display}
+        onClick={() => handleDisplay()}
+      />
+    );
   });
 
   return (

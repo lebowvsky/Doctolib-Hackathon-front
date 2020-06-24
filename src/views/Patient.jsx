@@ -1,11 +1,17 @@
 import React from 'react';
 
-export default function Patient({ patient }) {
+import style from './patient.module.css';
+
+export default function Patient({ patient, display, onClick }) {
   return (
-    <div>
+    <div className={style.container}>
       <div>{patient}</div>
-      <button>now</button>
-      <button>past</button>
+      <div className={display ? style.open : style.close} onClick={onClick}>
+        now
+      </div>
+      <div className={display ? style.open : style.close} onClick={onClick}>
+        past
+      </div>
     </div>
   );
 }
