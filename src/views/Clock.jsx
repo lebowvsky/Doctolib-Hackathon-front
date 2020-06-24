@@ -25,10 +25,10 @@ class Clock extends React.Component {
     return (
       <div className={styles.clockContainer}>
         <div className={styles.time}>
-          {this.state.date.toLocaleTimeString()}.
+          {this.state.date.toLocaleTimeString("en-GB")}.
         </div>
         <div className={styles.date}>
-          {this.state.date.toLocaleDateString()}
+          {this.state.date.toLocaleDateString("en-GB")}
         </div>
       </div>
     );
