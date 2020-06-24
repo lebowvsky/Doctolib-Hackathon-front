@@ -1,21 +1,15 @@
-import React, { useState } from 'react';
-
-const patients = ['uno', 'dos', 'tres', 'unpasito', 'palante', 'maria'];
+import React from 'react';
+import { Link } from 'react-router-dom';
 
 const DashboardMedecin = () => {
-  const [display, setDisplay] = useState(false);
-
-  const handleClickPatients = (e) => {
-    setDisplay(!display);
-  };
-
   return (
     <>
       <h2>DashboardMedecin</h2>
       <div>Date/heure</div>
       <div>
-        <button onClick={() => handleClickPatients()}>Patients</button>
-        <div>{display && patients.map((patient) => patient)}</div>
+        <Link to='/patients'>
+          <button>Patients</button>
+        </Link>
       </div>
       <button>Create prescription</button>
       <input placeholder='add a medoc' />
