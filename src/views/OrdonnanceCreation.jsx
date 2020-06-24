@@ -1,37 +1,42 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import Medoc from "../components/Medoc";
 
 const OrdonnanceCreation = () => {
+  const [patientSelected, setPatientSelected] = useState();
+  const [patientAddFirstName, setPatientAddFirstName] = useState();
+  const [patientAddLastname, setPatientAddLastname] = useState();
+  const [medocSelected, setMedocSelected] = useState();
 
-const [patientSelected, setPatientSelected] = useState();
-const [patientAddFirstName, setPatientAddFirstName] = useState();
-const [patientAddLastname, setPatientAddLastname] = useState();
+  const handleSelectPatient = (e) => {
+    setPatientSelected(e.target.value);
+  };
 
-const handleSelectPatient = (e) => {
-  setPatientSelected(e.target.value);
-};
+  const handleAddPatientFirstname = (e) => {
+    setPatientAddFirstName(e.target.value);
+  };
 
-const handleAddPatientFirstname = (e) => {
-  setPatientAddFirstName(e.target.value)
-}
+  const handleAddPatientLastname = (e) => {
+    setPatientAddLastname(e.target.value);
+  };
 
-const handleAddPatientLastname = (e) => {
-  setPatientAddLastname(e.target.value)
-}
-
-const handleAddPatient = (e) => {
-  e.preventDefault();
-};
-
-const handleAddMedoc = () => {
-  
-}
-
-const OrdonnanceCreation = (e) => {
+  const handleAddPatient = (e) => {
     e.preventDefault();
   };
 
-  
+  const handleAddMedoc = () => {};
+
+  const handleSelectMedoc = (e) => {
+    setMedocSelected(e.target.value)
+  }
+
+  const handleSubmitCommande = () => {
+
+  }
+
+  const OrdonnanceCreation = (e) => {
+    e.preventDefault();
+  };
 
   return (
     <div>
@@ -79,27 +84,18 @@ const OrdonnanceCreation = (e) => {
               placeholder="drug's name"
             />
           </div>
-
-          <div>
-            <label htmlFor="morning_medoc">Morning</label>
-            <input type="checkbox" name="morning_medoc" id="morning_medoc" />
-            <label htmlFor="noon_medoc">Noon</label>
-            <input type="checkbox" name="noon_medoc" id="noon_medoc" />
-            <label htmlFor="evening_medoc">Evening</label>
-            <input type="checkbox" name="evening_medoc" id="evening_medoc" />
-          </div>
-
-          <div>
-            <label htmlFor="date_begining">Start date</label>
-            <input type="date" name="date_begining" id="date_begining" />
-            <label htmlFor="date_end">End date</label>
-            <input type="date" name="date_end" id="date_end" />
-          </div>
           <button type="submit">Add Drug</button>
         </form>
+      </div>
+
+      <div id="ordonnance">
+        <h3>Firstname Lastname</h3>
+        <Medoc />
+        
       </div>
     </div>
   );
 };
 
 export default OrdonnanceCreation;
+
