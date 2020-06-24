@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
+const OrdonnanceCreation = () => {
+
 const [patientSelected, setPatientSelected] = useState();
 const [patientAddFirstName, setPatientAddFirstName] = useState();
 const [patientAddLastname, setPatientAddLastname] = useState();
@@ -21,7 +23,11 @@ const handleAddPatient = (e) => {
   e.preventDefault();
 };
 
-const OrdonnanceCreation = () => {
+const handleAddMedoc = () => {
+  
+}
+
+const OrdonnanceCreation = (e) => {
     e.preventDefault();
   };
 
