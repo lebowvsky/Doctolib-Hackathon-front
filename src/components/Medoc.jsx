@@ -6,6 +6,12 @@ const Medoc = ({
   morningCheck,
   noonCheck,
   eveningCheck,
+  isMorningTrue,
+  isNoonTrue,
+  isEveningTrue,
+  morningQuantity,
+  noonQuantity,
+  eveningQuantity,
   medocDateStart,
   medocDateEnd,
 }) => {
@@ -38,6 +44,38 @@ const Medoc = ({
           name="evening_medoc"
           id="evening_medoc"
           onChange={eveningCheck}
+        />
+      </div>
+      <div>
+        <label htmlFor="morning-quantity">Morning quantity</label>
+        <input
+          type="number"
+          name="morning-quantity"
+          id="morning-quantity"
+          min="0"
+          max="10"
+          onChange={morningQuantity}
+          disabled={!isMorningTrue ? true : false}
+        />
+        <label htmlFor="noon-quantity">Noon quantity</label>
+        <input
+          type="number"
+          name="noon-quantity"
+          id="noon-quantity"
+          min="0"
+          max="10"
+          onChange={noonQuantity}
+          disabled={!isNoonTrue ? true : false}
+        />
+        <label htmlFor="evening-quantity">Evening quantity</label>
+        <input
+          type="number"
+          name="evening-quantity"
+          id="evening-quantity"
+          min="0"
+          max="10"
+          onChange={eveningQuantity}
+          disabled={!isEveningTrue ? true : false}
         />
       </div>
       <div>
