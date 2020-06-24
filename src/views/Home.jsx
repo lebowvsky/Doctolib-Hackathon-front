@@ -1,44 +1,34 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 import styles from './Home.module.css';
 
 const Home = () => {
+  const [hoverButton, setHover] = useState(false);
 
-  const [showDoctors, setShowDoctors] = useState(false);
-  const [showPatients, setShowPatients] = useState(false);
-
-  const handleShowDoctors = () => {
-    setShowDoctors(!showDoctors);
-    setShowPatients(false);
-  }
-
-  const handleShowPatients = () => {
-    setShowPatients(!showPatients);
-    setShowDoctors(false);
-  }
+  const handleMouseEnter = () => setHover(true);
+  const handleMouseLeave = () => setHover(false);
 
   return(
     <div className={styles.MainDiv}>
       <h2>LOGO</h2>
       <div className={styles.ButtonDiv}>
-        <div className={styles.intraButtonDiv}>
-          <button onClick={() => handleShowDoctors()} className={styles.Button}>I am a doctor</button>
-          <div className={showDoctors ? styles.ShowDiv : styles.HideDiv}>
-            <label for="doctor-select">Choose</label>
-            <select name="doctors" id="doctor-select">
-              <option value="Clark Kent">Clark Kent</option>
-            </select>
+        <Link to="/dashboard-medecin">
+          <div
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+            className={hoverButton ? styles.ButtonClicked : styles.Button}>
+              I am a doctor
           </div>
-        </div>
-        <div className={styles.intraButtonDiv}>
-          <button onClick={() => handleShowPatients()} className={styles.Button}>I am a patient</button>
-          <div className={showPatients ? styles.ShowDiv : styles.HideDiv}>
-            <label for="patient-select">Choose</label>
-            <select name="patients" id="patient-select">
-              <option value="Blanche Gardin">Blanche Gardin</option>
-            </select>
+        </Link>
+        <Link to="/dashboard-patient">
+          <div
+            onMouseEnter={() => setHover(true)}
+            onMouseLeave={() => setHover(false)}
+            className={styles.ButtonClicked}>
+              I am a patient
           </div>
-        </div>
+        </Link>
       </div>
     </div>
   );
