@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import style from './OrdonnanceCreation.module.css';
 import Medoc from "../components/Medoc";
 
 const OrdonnanceCreation = () => {
@@ -77,7 +78,7 @@ const OrdonnanceCreation = () => {
   };
 
   return (
-    <div>
+    <div className={style.all}>
       <h2>Create a prescription</h2>
       <div id="choose-patient">
         <form>
