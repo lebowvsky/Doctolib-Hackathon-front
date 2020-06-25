@@ -43,9 +43,9 @@ const Home = (props) => {
 
   const handleMedecin = (e) => {
     setMedecinId(Number(e.target.value));
-    props.changeMedecinId(medecinId);
-    props.changeMedecinFirstname(medecinFirstname);
-    props.changeMedecinLastname(medecinLastname);
+    /* props.changeMedecinId(medecinId); */
+    /* props.changeMedecinFirstname(medecinFirstname);
+    props.changeMedecinLastname(medecinLastname); */
   };
 
   const handlePatient = (e) => {
@@ -55,11 +55,16 @@ const Home = (props) => {
     props.changePatientLastname(patientLastname);
   };
 
+  const handleAddMedecinRedux = (e) => {
+    e.preventDefault();
+    props.changePatientId(patientId);
+  }
+
   return (
     <div className={styles.MainDiv}>
       <h2>LOGO</h2>
       <div className={styles.ButtonDiv}>
-        <form>
+        <form onSubmit={handleAddMedecinRedux}>
           <select name="medecin" id="medecin" onChange={handleMedecin}>
             {medecinAll.map((medecin) => {
               return (
@@ -69,6 +74,7 @@ const Home = (props) => {
               );
             })}
           </select>
+          <button type="submit">BOUTON</button>
         </form>
         <Link to="/dashboard-medecin">
           <div className={styles.Button}>I am a doctor</div>

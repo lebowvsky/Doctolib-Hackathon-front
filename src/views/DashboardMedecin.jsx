@@ -2,8 +2,9 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 import axios from "axios";
+import { connect } from "react-redux";
 
-const DashboardMedecin = () => {
+const DashboardMedecin = (props) => {
   const [patientAll, setPatientAll] = useState([]);
   const [patientSelectedId, setPatientSelectedId] = useState();
   const [patientSelectedFirstname, setPatientSelectedFirstname] = useState();
@@ -137,8 +138,16 @@ const DashboardMedecin = () => {
         </form>
       </div>
       <button>Create patient</button>
+      <h1>{`${props.medecin.id}`}</h1>
     </>
   );
 };
 
-export default DashboardMedecin;
+const mapStateToProps = (state) => {
+  return {
+    medecin: state.medecin,
+    patient: state.patient,
+  };
+};
+
+export default connect(mapStateToProps)(DashboardMedecin);
