@@ -1,6 +1,7 @@
 import React from "react";
 
 const Medoc = ({
+  medocAll,
   handleSubmitCommande,
   handleSelectMedoc,
   morningCheck,
@@ -12,6 +13,7 @@ const Medoc = ({
   morningQuantity,
   noonQuantity,
   eveningQuantity,
+  handleComment,
   medocDateStart,
   medocDateEnd,
 }) => {
@@ -19,9 +21,9 @@ const Medoc = ({
     <form id="commande" onSubmit={handleSubmitCommande}>
       <label htmlFor="medoc">Drug</label>
       <select name="medoc" id="medoc" onChange={handleSelectMedoc}>
-        <option value="medoc1">medoc 1</option>
-        <option value="medoc2">medoc 2</option>
-        <option value="medoc3">medoc 3</option>
+        {medocAll.map(medoc => {
+          return <option value={`${medoc.id}`}>{`${medoc.nom}`}</option>
+        })}
       </select>
       <div>
         <label htmlFor="morning_medoc">Morning</label>
@@ -79,6 +81,11 @@ const Medoc = ({
         />
       </div>
       <div>
+        <label htmlFor="comment">Comment</label>
+        <input type="text" name="comment" id="comment" onChange={handleComment}/>
+      </div>
+      <div>
+        <div>
         <label htmlFor="date_begining">Start date</label>
         <input
           type="date"
@@ -86,6 +93,8 @@ const Medoc = ({
           id="date_begining"
           onChange={medocDateStart}
         />
+        </div>
+        
         <label htmlFor="date_end">End date</label>
         <input
           type="date"
