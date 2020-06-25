@@ -2,8 +2,13 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
+import styles from './Home.module.css';
+import doctorIcon from '../medias/doctor-02.svg';
+import patientIcon from '../medias/patient-01.svg';
+import LogoHorizontal from '../medias/logo-horizontalG-02.svg';
 import styles from "./Home.module.css";
 import { connect } from "react-redux";
+
 import {
   changeMedecinId,
   changeMedecinFirstname,
@@ -14,6 +19,7 @@ import {
   changePatientFirstname,
   changePatientLastname,
 } from "../actions/patientActions";
+
 
 const Home = (props) => {
   const [medecinAll, setMedecinAll] = useState([]);
@@ -67,7 +73,10 @@ const Home = (props) => {
 
   return (
     <div className={styles.MainDiv}>
-      <h2>LOGO</h2>
+      <div className={styles.LogoDiv}>
+        <img src={LogoHorizontal} alt="App Logo" />
+        <h2 className={styles.LogoText}>Louisette rase tout</h2>
+      </div>
       <div className={styles.ButtonDiv}>
         <form>
           <select name="medecin" id="medecin" onChange={handleMedecin}>
@@ -97,7 +106,25 @@ const Home = (props) => {
         <Link to="/dashboard-patient">
           <div className={styles.Button}>I am a patient</div>
         </Link>
+        {/*
       </div>
+        <div className={styles.ButtonSubDiv}>
+          <Link to="/dashboard-medecin">
+            <div className={styles.Button}>
+              <img class={styles.ButtonImg} src={doctorIcon} alt="Doctor icon"/> 
+            </div>
+          </Link>
+          <p>Doctor</p>
+        </div>
+        <div className={styles.ButtonSubDiv}>
+          <Link to="/dashboard-patient">
+            <div className={styles.Button}>
+              <img className={styles.ButtonImg} src={patientIcon} alt="Patient icon"/>
+            </div>
+          </Link>
+          <p>Patient</p>
+        </div>
+        */}
     </div>
   );
 };
