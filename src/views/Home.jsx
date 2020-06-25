@@ -7,18 +7,20 @@ const Home = () => {
 
   return(
     <div className={styles.MainDiv}>
-      <h2>LOGO</h2>
+      <div className={styles.LogoDiv}><h2>LOGO</h2></div>
       <div className={styles.ButtonDiv}>
-        <Link to="/dashboard-medecin">
-          <div className={styles.Button}>
-            I am a doctor
-          </div>
-        </Link>
-        <Link to="/dashboard-patient">
-          <div className={styles.Button}>
-            I am a patient
-          </div>
-        </Link>
+        <div className={styles.ButtonSubDiv}>
+          <Link to="/dashboard-medecin">
+            <div className={styles.Button} />
+          </Link>
+          <p>Doctor</p>
+        </div>
+        <div className={styles.ButtonSubDiv}>
+          <Link to="/dashboard-patient">
+            <div className={styles.Button}/>
+          </Link>
+          <p>Patient</p>
+        </div>
       </div>
     </div>
   );
