@@ -1,27 +1,32 @@
 import React, { useState, useEffect } from "react";
+import { connect } from "react-redux";
 import axios from "axios";
 import styles from "./DashboardPatient.module.css";
+
 import Clock from "./Clock";
 
-const DashboardPatient = () => {
+const DashboardPatient = (props) => {
   const [isOpen, setIsOpen] = useState(false);
   const [prescriptions, setPrescriptions] = useState([]);
   const [error, setError] = useState("");
+  const [prescriptionLength, setLength] = useState();
 
   useEffect(() => {
-    const id = 1;
     const getPresc = async () => {
       try {
-        const number = await axios.get(
-          `http://localhost:8080/api/patients/${id}/ordonnaces`
+        const prescr = await axios.get(
+          `http://localhost:8080/api/patients/${props.patient.id}/ordonnances`
         );
-        setPrescriptions(...number);
+        setLength(prescr.data.length);
+        setPrescriptions(prescr.data);
       } catch (err) {
         setError(err);
+      } finally {
+        console.log(prescriptions);
       }
     };
     getPresc();
-  }, [prescriptions]);
+  }, []);
 
   const handleClick = () => {
     setIsOpen(!isOpen);
@@ -32,13 +37,15 @@ const DashboardPatient = () => {
     <div className={styles.container}>
       <div className={styles.dashboard}>
         <div className={styles.topPage}>
-          <div className={styles.title}>My Dashboard</div>
+          <div className={styles.title}>
+            My Dashboard
+            <p className={styles.prenom}>
+              {props.patient.nom} {props.patient.prenom}
+            </p>
+          </div>
           <Clock />
         </div>
-        <div
-          onClick={() => handleClick()}
-          className={isOpen ? styles.open : styles.close}
-        >
+        <div className={isOpen ? styles.open : styles.close}>
           <div
             className={
               isOpen
@@ -46,34 +53,32 @@ const DashboardPatient = () => {
                 : styles.prescriptionInfosClose
             }
           >
-            <p className={styles.prescriptionTitle}>My prescriptions</p>
-            <p className={styles.prescriptionNumber}>3</p>
+            <p
+              onClick={() => handleClick()}
+              className={styles.prescriptionTitle}
+            >
+              My prescriptions
+            </p>
+            <p
+              onClick={() => handleClick()}
+              className={styles.prescriptionNumber}
+            >
+              {prescriptionLength}
+            </p>
           </div>
           <div className={isOpen ? styles.contentOpen : styles.contentClose}>
-            <div>
-              <p className={styles.prescriptionName}>Ordonnance 1</p>
-              <p className={styles.prescriptionDescription}>
-                petite description pour voir de quoi ça parle
-              </p>
-            </div>
-            <div>
-              <p className={styles.prescriptionName}>Ordonnance 2</p>
-              <p className={styles.prescriptionDescription}>
-                petite description
-              </p>
-            </div>
-            <div>
-              <p className={styles.prescriptionName}>Ordonnance 3</p>
-              <p className={styles.prescriptionDescription}>
-                petite description
-              </p>
-            </div>
-            <div>
-              <p className={styles.prescriptionName}>Ordonnance 4</p>
-              <p className={styles.prescriptionDescription}>
-                petite description
-              </p>
-            </div>
+            {prescriptions.map((prescription) => {
+              return (
+                <div>
+                  <p className={styles.prescriptionName}>
+                    Ordonnance n°{prescription.id}
+                  </p>
+                  <p className={styles.prescriptionDescription}>
+                    Medecin : {prescription.nom} {prescription.prenom}
+                  </p>
+                </div>
+              );
+            })}
           </div>
         </div>
         <div className={styles.reminder}>
@@ -93,4 +98,10 @@ const DashboardPatient = () => {
   );
 };
 
-export default DashboardPatient;
+const mapStateToProps = (state) => {
+  return {
+    patient: state.patient,
+  };
+};
+
+export default connect(mapStateToProps)(DashboardPatient);
