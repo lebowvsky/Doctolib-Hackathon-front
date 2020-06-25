@@ -30,6 +30,7 @@ html {
   flex-grow: 1;
   width: 20%;
   margin-right: 15px;
+  margin-top: 15px;
   font-weight: 200;
   border-radius: 20px;
   background: #f2f2f2;
@@ -140,6 +141,7 @@ html {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  margin-top: 15px;
   align-self: center;
   flex-grow: 2;
 
@@ -196,9 +198,9 @@ html {
 }
 
 @media screen and (min-width: 561px) {
-  .new {
+  /* .new {
     margin-top: 0;
-  }
+  } */
 
   .reminder {
     margin-right: 15px;
