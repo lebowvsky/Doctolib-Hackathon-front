@@ -30,6 +30,9 @@ const Home = (props) => {
   const [patientFirstname, setPatientFirstname] = useState();
   const [patientLastname, setPatientLastname] = useState();
 
+  const [showMedecins, setShowMedecins] = useState(false);
+  const [showPatients, setShowPatients] = useState(false);
+
   useEffect(() => {
     axios
       .get("http://localhost:8080/api/patients")
@@ -70,60 +73,74 @@ const Home = (props) => {
       });
   };
 
+  const handleShowMedecins = () => {
+    setShowMedecins(!showMedecins);
+    setShowPatients(false);
+  }
+
+  const handleShowPatients = () => {
+    setShowPatients(!showPatients);
+    setShowMedecins(false);
+  }
+
   return (
     <div className={styles.MainDiv}>
       <div className={styles.LogoDiv}>
         <img src={LogoHorizontal} alt="App Logo" />
         <h2 className={styles.LogoText}>Louisette rase tout</h2>
       </div>
-      <div className={styles.ButtonDiv}>
-        <form>
-          <select name="medecin" id="medecin" onChange={handleMedecin}>
-            {medecinAll.map((medecin) => {
-              return (
-                <option
-                  value={medecin.id}
-                >{`${medecin.prenom} ${medecin.nom}`}</option>
-              );
-            })}
-          </select>
-        </form>
-        <Link to="/dashboard-medecin">
-          <div className={styles.Button}>I am a doctor</div>
-        </Link>
-        <form>
-          <select name="patient" id="patient" onChange={handlePatient}>
-            {patientAll.map((patient) => {
-              return (
-                <option
-                  value={patient.id}
-                >{`${patient.prenom} ${patient.nom}`}</option>
-              );
-            })}
-          </select>
-        </form>
-        <Link to="/dashboard-patient">
-          <div className={styles.Button}>I am a patient</div>
-        </Link>
-        
-      </div>
-        <div className={styles.ButtonSubDiv}>
+      <div className={styles.FormDiv}>
+        <div className={showMedecins ? styles.FormMedecinShow : styles.FormMedecinNoShow}>
+          <form>
+            <select name="medecin" id="medecin" onChange={handleMedecin} className={styles.Form}>
+              {medecinAll.map((medecin) => {
+                return (
+                  <option
+                    value={medecin.id}
+                  >{`${medecin.prenom} ${medecin.nom}`}</option>
+                );
+              })}
+            </select>
+          </form>
           <Link to="/dashboard-medecin">
-            <div className={styles.Button}>
-              <img class={styles.ButtonImg} src={doctorIcon} alt="Doctor icon"/> 
-            </div>
+            <div className={styles.ButtonEnter}>GO</div>
           </Link>
+        </div>
+        <div className={showPatients ? styles.FormPatientShow : styles.FormPatientNoShow}>
+          <form>
+            <select name="patient" id="patient" onChange={handlePatient} className={styles.Form}>
+              {patientAll.map((patient) => {
+                return (
+                  <option
+                    value={patient.id}
+                  >{`${patient.prenom} ${patient.nom}`}</option>
+                );
+              })}
+            </select>
+          </form>
+          <Link to="/dashboard-patient">
+            <div className={styles.ButtonEnter}>GO</div>
+          </Link>
+        </div>      
+      </div>
+      <div className={styles.ButtonDiv}>
+        <div className={styles.ButtonSubDiv}>
+          <div 
+            className={styles.Button}
+            onClick={handleShowMedecins}>
+              <img class={styles.ButtonImg} src={doctorIcon} alt="Doctor icon"/> 
+          </div>
           <p>Doctor</p>
         </div>
         <div className={styles.ButtonSubDiv}>
-          <Link to="/dashboard-patient">
-            <div className={styles.Button}>
+          <div 
+            className={styles.Button}
+            onClick={handleShowPatients}>
               <img className={styles.ButtonImg} src={patientIcon} alt="Patient icon"/>
-            </div>
-          </Link>
+          </div>
           <p>Patient</p>
         </div>
-       
+      </div>
     </div>
   );
 };
