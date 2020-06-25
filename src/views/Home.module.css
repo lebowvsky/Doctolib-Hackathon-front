@@ -2,6 +2,7 @@
 
 * {
   margin: 0px;
+  font-family: 'Roboto', sans-serif;
 }
 
 a {
@@ -21,10 +22,16 @@ a {
 
 .LogoDiv {
   height: 70vh;
-  width: 100%;
+  width: 50%;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+.LogoText {
+  margin-top: 20px;
+  font-weight: 300;
 }
 
 .ButtonDiv {
