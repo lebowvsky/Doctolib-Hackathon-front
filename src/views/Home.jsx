@@ -17,7 +17,7 @@ import {
 
 const Home = (props) => {
   const [medecinAll, setMedecinAll] = useState([]);
-  const [medecinId, setMedecinId] = useState(2);
+  const [medecinId, setMedecinId] = useState();
   const [medecinFirstname, setMedecinFirstname] = useState();
   const [medecinLastname, setMedecinLastname] = useState();
   const [patientAll, setPatientAll] = useState([]);
@@ -43,16 +43,26 @@ const Home = (props) => {
 
   const handleMedecin = (e) => {
     setMedecinId(Number(e.target.value));
-    props.changeMedecinId(medecinId);
-    /* props.changeMedecinFirstname(medecinFirstname);
-    props.changeMedecinLastname(medecinLastname); */
+    props.changeMedecinId(e.target.value);
+    axios
+      .get(`http://localhost:8080/api/medecins/${e.target.value}`)
+      .then((response) => response.data)
+      .then((data) => {
+        props.changeMedecinFirstname(data[0].prenom);
+        props.changeMedecinLastname(data[0].nom);
+      });
   };
 
   const handlePatient = (e) => {
     setPatientId(Number(e.target.value));
-    props.changePatientId(patientId);
-    props.changePatientFirstname(patientFirstname);
-    props.changePatientLastname(patientLastname);
+    props.changePatientId(e.target.value);
+    axios
+      .get(`http://localhost:8080/api/patients/${e.target.value}`)
+      .then((response) => response.data)
+      .then((data) => {
+        props.changePatientFirstname(data[0].prenom);
+        props.changePatientLastname(data[0].nom);
+      });
   };
 
   return (
