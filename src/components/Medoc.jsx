@@ -85,6 +85,7 @@ const Medoc = ({
         <input type="text" name="comment" id="comment" onChange={handleComment}/>
       </div>
       <div>
+        <div>
         <label htmlFor="date_begining">Start date</label>
         <input
           type="date"
@@ -92,6 +93,8 @@ const Medoc = ({
           id="date_begining"
           onChange={medocDateStart}
         />
+        </div>
+        
         <label htmlFor="date_end">End date</label>
         <input
           type="date"
