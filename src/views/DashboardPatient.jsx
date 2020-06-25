@@ -5,19 +5,23 @@ import Clock from "./Clock";
 
 const DashboardPatient = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [prescNumber, setPrescNumber] = useState("");
+  const [prescriptions, setPrescriptions] = useState([]);
+  const [error, setError] = useState("");
 
-  // useEffect(() => {
-  //   const getNumber = async () => {
-  //     try {
-  //       const number = await axios.get(`/prescription-number`);
-  //       setPrescNumber(user.data);
-  //     } catch (err) {
-  //       setError(err);
-  //     }
-  //   };
-  //   getUser();
-  // }, []);
+  useEffect(() => {
+    const id = 1;
+    const getPresc = async () => {
+      try {
+        const number = await axios.get(
+          `http://localhost:8080/api/patients/${id}/ordonnaces`
+        );
+        setPrescriptions(...number);
+      } catch (err) {
+        setError(err);
+      }
+    };
+    getPresc();
+  }, [prescriptions]);
 
   const handleClick = () => {
     setIsOpen(!isOpen);
