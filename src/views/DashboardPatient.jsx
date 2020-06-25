@@ -1,10 +1,23 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import styles from "./DashboardPatient.module.css";
 import Clock from "./Clock";
 
 const DashboardPatient = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [prescNumber, setPrescNumber] = useState("");
+
+  // useEffect(() => {
+  //   const getNumber = async () => {
+  //     try {
+  //       const number = await axios.get(`/prescription-number`);
+  //       setPrescNumber(user.data);
+  //     } catch (err) {
+  //       setError(err);
+  //     }
+  //   };
+  //   getUser();
+  // }, []);
 
   const handleClick = () => {
     setIsOpen(!isOpen);
@@ -15,7 +28,7 @@ const DashboardPatient = () => {
     <div className={styles.container}>
       <div className={styles.dashboard}>
         <div className={styles.topPage}>
-          <h2>My Dashboard</h2>
+          <div className={styles.title}>My Dashboard</div>
           <Clock />
         </div>
         <div
