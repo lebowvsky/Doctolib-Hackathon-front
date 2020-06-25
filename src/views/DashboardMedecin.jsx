@@ -3,6 +3,11 @@ import { Link } from "react-router-dom";
 
 import axios from "axios";
 import { connect } from "react-redux";
+import {
+  changePatientId,
+  changePatientFirstname,
+  changePatientLastname,
+} from "../actions/patientActions";
 
 const DashboardMedecin = (props) => {
   const [patientAll, setPatientAll] = useState([]);
@@ -12,6 +17,7 @@ const DashboardMedecin = (props) => {
   const [patientAddFirstName, setPatientAddFirstName] = useState();
   const [patientAddLastname, setPatientAddLastname] = useState();
   const [medocToAdd, setMedocToAdd] = useState();
+  const [catchError, setCatchError] = useState();
 
   useEffect(() => {
     axios
@@ -28,6 +34,9 @@ const DashboardMedecin = (props) => {
       .get(`http://localhost:8080/api/patients/${e.target.value}`)
       .then((response) => response.data)
       .then((data) => {
+        props.changePatientFirstname(data[0].prenom);
+        props.changePatientLastname(data[0].nom);
+        props.changePatientId(data[0].id);
         setPatientSelectedFirstname(data[0].prenom);
         setPatientSelectedLastname(data[0].nom);
       });
@@ -41,21 +50,18 @@ const DashboardMedecin = (props) => {
     setPatientAddLastname(e.target.value);
   };
 
-  const handleAddPatient = (e) => {
+  const handleAddPatient = async (e) => {
     e.preventDefault();
-    axios
-      .post("http://localhost:8080/api/patients", {
+    try {
+      await axios.post("http://localhost:8080/api/patients", {
         nom: patientAddLastname,
         prenom: patientAddFirstName,
-      })
-      .then((res) => res.data)
-      .then((res) => {
-        alert("patient ajouté");
-      })
-      .catch((e) => {
-        console.error(e);
-        alert(`Erreur lors de l'ajout du patient : ${e.message}`);
       });
+      const addAllPat = await axios.get("http://localhost:8080/api/patients");
+      setPatientAll(addAllPat.data);
+    } catch (err) {
+      setCatchError(err);
+    }
   };
 
   const addMedocOnHooks = (e) => {
@@ -75,6 +81,19 @@ const DashboardMedecin = (props) => {
         alert(`Erreur lors de l'ajout du produit : ${e.message}`);
       });
   };
+
+  const handleCreateOrdonnance = async (e) => {
+    e.preventDefault();
+    try {
+      axios.post("http://localhost:8080/api/ordonnances", {
+        id_patient: props.patient.id,
+        id_medecin: props.medecin.id,
+      });
+    } catch (err) {
+      setCatchError(err);
+    }
+  };
+
   return (
     <>
       <h2>DashboardMedecin</h2>
@@ -84,7 +103,9 @@ const DashboardMedecin = (props) => {
           <button>Patients</button>
         </Link>
       </div>
-      <button>Create prescription</button>
+      <div>
+        <button onClick={handleCreateOrdonnance}>Create prescription</button>
+      </div>
       <div id="choose-patient">
         <form>
           <h3>Choose a patient</h3>
@@ -101,7 +122,7 @@ const DashboardMedecin = (props) => {
         </form>
 
         <form id="add-patient" onSubmit={handleAddPatient}>
-          <h3>Choose a patient</h3>
+          <h3>Create a patient</h3>
           <label htmlFor="new_patient_firstname">Firstname</label>
           <input
             type="text"
@@ -137,10 +158,17 @@ const DashboardMedecin = (props) => {
           <button type="submit">Add Drug</button>
         </form>
       </div>
-      <button>Create patient</button>
-      <h1>{`${props.medecin.id}`}</h1>
     </>
   );
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    changePatientFirstname: (prenom) =>
+      dispatch(changePatientFirstname(prenom)),
+    changePatientLastname: (nom) => dispatch(changePatientLastname(nom)),
+    changePatientId: (id) => dispatch(changePatientId(id)),
+  };
 };
 
 const mapStateToProps = (state) => {
@@ -150,4 +178,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(DashboardMedecin);
+export default connect(mapStateToProps, mapDispatchToProps)(DashboardMedecin);
