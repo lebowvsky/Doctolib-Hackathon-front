@@ -8,6 +8,7 @@ import {
   changePatientFirstname,
   changePatientLastname,
 } from "../actions/patientActions";
+import { changeOrdonnancesId } from "../actions/ordonnanceActions";
 
 const DashboardMedecin = (props) => {
   const [patientAll, setPatientAll] = useState([]);
@@ -85,14 +86,23 @@ const DashboardMedecin = (props) => {
   const handleCreateOrdonnance = async (e) => {
     e.preventDefault();
     try {
-      axios.post("http://localhost:8080/api/ordonnances", {
+      await axios.post("http://localhost:8080/api/ordonnances", {
         id_patient: props.patient.id,
         id_medecin: props.medecin.id,
       });
+      const lastOrdoId = await axios.get(
+        "http://localhost:8080/api/ordonnances/last"
+      );
+      props.changeOrdonnancesId(lastOrdoId.data[0].id);
+      props.history.push("/ordonnance-creation");
     } catch (err) {
       setCatchError(err);
     }
   };
+
+  const hophop = () => {
+    props.changeOrdonnancesId("1");
+  }
 
   return (
     <>
@@ -120,28 +130,6 @@ const DashboardMedecin = (props) => {
             })}
           </select>
         </form>
-
-        <form id="add-patient" onSubmit={handleAddPatient}>
-          <h3>Create a patient</h3>
-          <label htmlFor="new_patient_firstname">Firstname</label>
-          <input
-            type="text"
-            name="new_patient_firstname"
-            id="new_patient_firstname"
-            placeholder="new patient firstname"
-            onChange={handleAddPatientFirstname}
-          />
-
-          <label htmlFor="new_patient_name">Lastname</label>
-          <input
-            type="text"
-            name="new_patient_lastname"
-            id="new_patient_lastname"
-            placeholder="new patient lastname"
-            onChange={handleAddPatientLastname}
-          />
-          <button type="submit">Add patient</button>
-        </form>
       </div>
       <div id="medocs">
         <form id="add_medoc" onSubmit={handleAddMedoc}>
@@ -157,7 +145,31 @@ const DashboardMedecin = (props) => {
           </div>
           <button type="submit">Add Drug</button>
         </form>
+        <button onClick={hophop}>IdOrdonnance</button>
       </div>
+      {/* <div id="create-patient">
+          <form id="add-patient" onSubmit={handleAddPatient}>
+            <h3>Create a patient</h3>
+            <label htmlFor="new_patient_firstname">Firstname</label>
+            <input
+              type="text"
+              name="new_patient_firstname"
+              id="new_patient_firstname"
+              placeholder="new patient firstname"
+              onChange={handleAddPatientFirstname}
+            />
+
+            <label htmlFor="new_patient_name">Lastname</label>
+            <input
+              type="text"
+              name="new_patient_lastname"
+              id="new_patient_lastname"
+              placeholder="new patient lastname"
+              onChange={handleAddPatientLastname}
+            />
+            <button type="submit">Add patient</button>
+          </form>
+        </div> */}
     </>
   );
 };
@@ -168,6 +180,7 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(changePatientFirstname(prenom)),
     changePatientLastname: (nom) => dispatch(changePatientLastname(nom)),
     changePatientId: (id) => dispatch(changePatientId(id)),
+    changeOrdonnancesId: (id) => dispatch(changeOrdonnancesId(id)),
   };
 };
 
@@ -175,6 +188,7 @@ const mapStateToProps = (state) => {
   return {
     medecin: state.medecin,
     patient: state.patient,
+    ordonnance: state.ordonnance,
   };
 };
 
