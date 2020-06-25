@@ -10,6 +10,7 @@ const OrdonnanceCreation = () => {
   const [patientSelectedLastname, setPatientSelectedLastname] = useState();
   const [patientAddFirstName, setPatientAddFirstName] = useState();
   const [patientAddLastname, setPatientAddLastname] = useState();
+  const [medocAll, setMedocAll] = useState([]);
   const [medocSelected, setMedocSelected] = useState();
   const [medocToAdd, setMedocToAdd] = useState();
   const [morning, setMorning] = useState(false);
@@ -18,6 +19,7 @@ const OrdonnanceCreation = () => {
   const [morningMedocQuantity, setMorningMedocQuantity] = useState();
   const [noonMedocQuantity, setNoonMedocQuantity] = useState();
   const [eveningMedocQuantity, setEveningMedocQuantity] = useState();
+  const [comment, setComment] = useState();
   const [dateStart, setDateStart] = useState();
   const [dateEnd, setDateEnd] = useState();
 
@@ -27,6 +29,13 @@ const OrdonnanceCreation = () => {
       .then((response) => response.data)
       .then((data) => {
         setPatientAll(data);
+      });
+
+    axios
+      .get("http://localhost:8080/api/produits")
+      .then((response) => response.data)
+      .then((data) => {
+        setMedocAll(data);
       });
   }, []);
 
@@ -85,7 +94,7 @@ const OrdonnanceCreation = () => {
   };
 
   const handleSelectMedoc = (e) => {
-    setMedocSelected(e.target.value);
+    setMedocSelected(Number(e.target.value));
   };
 
   const morningCheck = (e) => {
@@ -112,6 +121,10 @@ const OrdonnanceCreation = () => {
     setEveningMedocQuantity(Number(e.target.value));
   };
 
+  const handleComment = (e) => {
+    setComment(e.target.value);
+  };
+
   const medocDateStart = (e) => {
     setDateStart(e.target.value);
   };
@@ -120,7 +133,28 @@ const OrdonnanceCreation = () => {
     setDateEnd(e.target.value);
   };
 
-  const handleSubmitCommande = () => {};
+  const handleSubmitCommande = (e) => {
+    e.preventDefault();
+    axios
+      .post("http://localhost:8080/api/commandes", {
+        quantite_matin: morningMedocQuantity,
+        quantite_midi: noonMedocQuantity,
+        quantite_soir: eveningMedocQuantity,
+        commentaire: comment,
+        date_debut: dateStart,
+        date_fin: dateEnd,
+        id_produit: medocSelected,
+        id_ordonnance: 1,
+      })
+      .then((res) => res.data)
+      .then((res) => {
+        alert("Ordonnance ajoutée");
+      })
+      .catch((e) => {
+        console.error(e);
+        alert(`Erreur lors de l'ajout de l'ordonnance : ${e.message}`);
+      });
+  };
 
   const OrdonnanceCreation = (e) => {
     e.preventDefault();
@@ -182,8 +216,9 @@ const OrdonnanceCreation = () => {
       </div>
 
       <div id="ordonnance">
-          <h3>{`${patientSelectedFirstname} ${patientSelectedLastname}`}</h3>
+        <h3>{`${patientSelectedFirstname} ${patientSelectedLastname}`}</h3>
         <Medoc
+          medocAll={medocAll}
           handleSubmitCommande={handleSubmitCommande}
           handleSelectMedoc={handleSelectMedoc}
           morningCheck={morningCheck}
@@ -194,6 +229,7 @@ const OrdonnanceCreation = () => {
           morningQuantity={morningQuantity}
           noonQuantity={noonQuantity}
           eveningQuantity={eveningQuantity}
+          handleComment={handleComment}
           isMorningTrue={morning}
           isNoonTrue={noon}
           isEveningTrue={evening}
