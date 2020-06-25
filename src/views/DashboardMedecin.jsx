@@ -29,7 +29,7 @@ const DashboardMedecin = (props) => {
       });
   }, []);
 
-  const handleSelectPatient = (e) => {
+  /* const handleSelectPatient = (e) => {
     setPatientSelectedId(Number(e.target.value));
     axios
       .get(`http://localhost:8080/api/patients/${e.target.value}`)
@@ -41,7 +41,7 @@ const DashboardMedecin = (props) => {
         setPatientSelectedFirstname(data[0].prenom);
         setPatientSelectedLastname(data[0].nom);
       });
-  };
+  }; */
 
   const handleAddPatientFirstname = (e) => {
     setPatientAddFirstName(e.target.value);
@@ -51,7 +51,7 @@ const DashboardMedecin = (props) => {
     setPatientAddLastname(e.target.value);
   };
 
-  const handleAddPatient = async (e) => {
+  /* const handleAddPatient = async (e) => {
     e.preventDefault();
     try {
       await axios.post("http://localhost:8080/api/patients", {
@@ -63,7 +63,7 @@ const DashboardMedecin = (props) => {
     } catch (err) {
       setCatchError(err);
     }
-  };
+  }; */
 
   const addMedocOnHooks = (e) => {
     setMedocToAdd(e.target.value);
@@ -100,10 +100,6 @@ const DashboardMedecin = (props) => {
     }
   };
 
-  const hophop = () => {
-    props.changeOrdonnancesId("1");
-  }
-
   return (
     <>
       <h2>DashboardMedecin</h2>
@@ -112,11 +108,14 @@ const DashboardMedecin = (props) => {
         <Link to="/patients">
           <button>Patients</button>
         </Link>
+        <Link to="/ordonnance-creation">
+          <button>Ordonnance</button>
+        </Link>
       </div>
-      <div>
+      {/* <div>
         <button onClick={handleCreateOrdonnance}>Create prescription</button>
-      </div>
-      <div id="choose-patient">
+      </div> */}
+      {/* <div id="choose-patient">
         <form>
           <h3>Choose a patient</h3>
           <label htmlFor="patient">Patient</label>
@@ -130,7 +129,7 @@ const DashboardMedecin = (props) => {
             })}
           </select>
         </form>
-      </div>
+      </div> */}
       <div id="medocs">
         <form id="add_medoc" onSubmit={handleAddMedoc}>
           <div>
@@ -145,7 +144,6 @@ const DashboardMedecin = (props) => {
           </div>
           <button type="submit">Add Drug</button>
         </form>
-        <button onClick={hophop}>IdOrdonnance</button>
       </div>
       {/* <div id="create-patient">
           <form id="add-patient" onSubmit={handleAddPatient}>
