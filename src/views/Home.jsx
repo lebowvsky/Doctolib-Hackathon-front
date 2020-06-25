@@ -17,7 +17,7 @@ import {
 
 const Home = (props) => {
   const [medecinAll, setMedecinAll] = useState([]);
-  const [medecinId, setMedecinId] = useState();
+  const [medecinId, setMedecinId] = useState(2);
   const [medecinFirstname, setMedecinFirstname] = useState();
   const [medecinLastname, setMedecinLastname] = useState();
   const [patientAll, setPatientAll] = useState([]);
@@ -43,7 +43,7 @@ const Home = (props) => {
 
   const handleMedecin = (e) => {
     setMedecinId(Number(e.target.value));
-    /* props.changeMedecinId(medecinId); */
+    props.changeMedecinId(medecinId);
     /* props.changeMedecinFirstname(medecinFirstname);
     props.changeMedecinLastname(medecinLastname); */
   };
@@ -55,16 +55,11 @@ const Home = (props) => {
     props.changePatientLastname(patientLastname);
   };
 
-  const handleAddMedecinRedux = (e) => {
-    e.preventDefault();
-    props.changePatientId(patientId);
-  }
-
   return (
     <div className={styles.MainDiv}>
       <h2>LOGO</h2>
       <div className={styles.ButtonDiv}>
-        <form onSubmit={handleAddMedecinRedux}>
+        <form>
           <select name="medecin" id="medecin" onChange={handleMedecin}>
             {medecinAll.map((medecin) => {
               return (
@@ -74,7 +69,6 @@ const Home = (props) => {
               );
             })}
           </select>
-          <button type="submit">BOUTON</button>
         </form>
         <Link to="/dashboard-medecin">
           <div className={styles.Button}>I am a doctor</div>
