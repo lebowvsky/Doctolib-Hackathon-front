@@ -6,7 +6,6 @@ import styles from './Home.module.css';
 import doctorIcon from '../medias/doctor-02.svg';
 import patientIcon from '../medias/patient-01.svg';
 import LogoHorizontal from '../medias/logo-horizontalG-02.svg';
-import styles from "./Home.module.css";
 import { connect } from "react-redux";
 
 import {
@@ -106,7 +105,7 @@ const Home = (props) => {
         <Link to="/dashboard-patient">
           <div className={styles.Button}>I am a patient</div>
         </Link>
-        {/*
+        
       </div>
         <div className={styles.ButtonSubDiv}>
           <Link to="/dashboard-medecin">
@@ -124,7 +123,7 @@ const Home = (props) => {
           </Link>
           <p>Patient</p>
         </div>
-        */}
+       
     </div>
   );
 };
