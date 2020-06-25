@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import axios from "axios";
 import styles from "./DashboardPatient.module.css";
+import { Link } from "react-router-dom";
 
 import Clock from "./Clock";
 
@@ -21,8 +22,6 @@ const DashboardPatient = (props) => {
         setPrescriptions(prescr.data);
       } catch (err) {
         setError(err);
-      } finally {
-        console.log(prescriptions);
       }
     };
     getPresc();
@@ -30,7 +29,6 @@ const DashboardPatient = (props) => {
 
   const handleClick = () => {
     setIsOpen(!isOpen);
-    console.log(isOpen);
   };
 
   return (
@@ -70,12 +68,14 @@ const DashboardPatient = (props) => {
             {prescriptions.map((prescription) => {
               return (
                 <div>
-                  <p className={styles.prescriptionName}>
-                    Ordonnance n°{prescription.id}
-                  </p>
-                  <p className={styles.prescriptionDescription}>
-                    Medecin : {prescription.nom} {prescription.prenom}
-                  </p>
+                  <Link to={`/ordonnance-details/${prescription.id}`}>
+                    <p className={styles.prescriptionName}>
+                      Ordonnance n°{prescription.id}
+                    </p>
+                    <p className={styles.prescriptionDescription}>
+                      Medecin : {prescription.nom} {prescription.prenom}
+                    </p>
+                  </Link>
                 </div>
               );
             })}
@@ -90,9 +90,14 @@ const DashboardPatient = (props) => {
           <p className={styles.notifTitle}>Add new</p>
         </div>
       </div>
-      <div onClick='' className={styles.drugHistory}>
-        <p>My drug history</p>
-        <p className={styles.subtitleEmergency}>In case of emergency</p>
+      <div className={styles.bottom}>
+        <Link to='/'>
+          <div className={styles.disconnect}>Q</div>
+        </Link>
+        <div onClick='' className={styles.drugHistory}>
+          <p>My drug history</p>
+          <p className={styles.subtitleEmergency}>In case of emergency</p>
+        </div>
       </div>
     </div>
   );

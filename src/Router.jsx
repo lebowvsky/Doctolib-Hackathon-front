@@ -1,11 +1,12 @@
-import React from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import React from "react";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
-import Home from './views/Home';
-import DashboardPatient from './views/DashboardPatient';
-import DashboardMedecin from './views/DashboardMedecin';
-import OrdonnanceCreation from './views/OrdonnanceCreation';
-import MyPatients from './views/MyPatients';
+import Home from "./views/Home";
+import DashboardPatient from "./views/DashboardPatient";
+import DashboardMedecin from "./views/DashboardMedecin";
+import OrdonnanceCreation from "./views/OrdonnanceCreation";
+import MyPatients from "./views/MyPatients";
+import OrdonnanceDetails from "./views/OrdonnanceDetails";
 
 export default function AppRouter() {
   return (
@@ -16,6 +17,7 @@ export default function AppRouter() {
         <Route path='/dashboard-patient' component={DashboardPatient} />
         <Route path='/ordonnance-creation' component={OrdonnanceCreation} />
         <Route path='/patients' component={MyPatients} />
+        <Route path='/ordonnance-details/:id' component={OrdonnanceDetails} />
       </Switch>
     </Router>
   );
