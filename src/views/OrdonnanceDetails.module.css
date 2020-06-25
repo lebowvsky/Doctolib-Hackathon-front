@@ -1,0 +1,66 @@
+.fullPage {
+  padding: 10px;
+}
+
+.topPage {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.container {
+  margin-top: 30px;
+  border-radius: 20px;
+  padding-top: 3px;
+  padding-left: 20px;
+  padding-right: 20px;
+  background: #f2f2f2;
+  box-shadow: 5px 5px 10px #cecece, -5px -5px 10px #ffffff;
+  color: #204357;
+}
+
+.title {
+  color: #204357;
+  font-weight: 700;
+  font-size: 1.5rem;
+}
+
+.titles {
+  color: orange;
+  font-weight: 200;
+}
+
+.numero {
+  color: #204357;
+  font-size: 1.3rem;
+  font-weight: 700;
+}
+
+.emission {
+  margin-top: -15px;
+}
+
+.content {
+  margin-top: 20px;
+}
+
+.nomMedoc {
+  color: #00bbdd;
+}
+
+.dates {
+  margin-top: -0.7rem;
+}
+
+.posologie {
+  display: flex;
+  justify-content: space-between;
+}
+
+.commentaire {
+}
+
+hr {
+  width: 33%;
+  color: #204357;
+}
