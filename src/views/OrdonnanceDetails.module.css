@@ -4,8 +4,40 @@
 
 .topPage {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
+}
+
+.topLeft {
+  display: flex;
+  width: 50%;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  margin-right: 10px;
+}
+
+.back {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50px;
+  width: 50px;
+  border-radius: 100px;
+  background: #f2f2f2;
+  box-shadow: 5px 5px 10px #cecece, -5px -5px 10px #ffffff;
+}
+
+.homeIcon {
+  margin-left: 12px;
+  width: 55%;
+}
+
+.title {
+  color: #204357;
+  font-weight: 700;
+  font-size: 1.1rem;
+  margin-top: 15px;
 }
 
 .container {
@@ -38,14 +70,17 @@
 
 .emission {
   margin-top: -15px;
+  padding-bottom: 1rem;
 }
 
 .content {
   margin-top: 20px;
+  padding-bottom: 20px;
 }
 
 .nomMedoc {
   color: #00bbdd;
+  text-align: center;
 }
 
 .dates {
@@ -54,10 +89,12 @@
 
 .posologie {
   display: flex;
+  margin-top: -1.3rem;
   justify-content: space-between;
 }
 
 .commentaire {
+  margin-top: -0.5rem;
 }
 
 hr {
