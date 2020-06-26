@@ -35,11 +35,14 @@ const DashboardPatient = (props) => {
     <div className={styles.container}>
       <div className={styles.dashboard}>
         <div className={styles.topPage}>
-          <div className={styles.title}>
-            My Dashboard
-            <p className={styles.prenom}>
-              {props.patient.nom} {props.patient.prenom}
-            </p>
+          <div className={styles.topLeft}>
+            <div className={styles.back}>D</div>
+            <div className={styles.title}>
+              My Dashboard
+              <p className={styles.prenom}>
+                {props.patient.nom} {props.patient.prenom}
+              </p>
+            </div>
           </div>
           <Clock />
         </div>
