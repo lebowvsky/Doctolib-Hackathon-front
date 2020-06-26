@@ -15,6 +15,8 @@ import discoIcon from "../medias/disconnect-button.svg";
 import Clock from "./Clock";
 
 const DashboardMedecin = (props) => {
+  const [patientAllOfMedecin, setPatientAllOfMedecin] = useState([]);
+  const [patientAllOfMedecinLength, setPatientAllOfMedecinLength] = useState();
   const [patientAll, setPatientAll] = useState([]);
   const [patientSelectedId, setPatientSelectedId] = useState();
   const [patientSelectedFirstname, setPatientSelectedFirstname] = useState();
@@ -35,6 +37,14 @@ const DashboardMedecin = (props) => {
       .then((response) => response.data)
       .then((data) => {
         setPatientAll(data);
+      });
+
+    axios
+      .get(`http://localhost:8080/api/medecins/${props.medecin.id}/patients`)
+      .then((response) => response.data)
+      .then((data) => {
+        setPatientAllOfMedecin(data);
+        setPatientAllOfMedecinLength(data.length);
       });
   }, []);
 
@@ -105,7 +115,7 @@ const DashboardMedecin = (props) => {
         <div className={styles.topPage}>
           <div className={styles.topLeft}>
             <div className={styles.back}>
-              <img src={HomeIcon} alt='home icon' className={styles.homeIcon} />
+              <img src={HomeIcon} alt="home icon" className={styles.homeIcon} />
             </div>
             <div className={styles.title}>
               My Dashboard
@@ -134,21 +144,16 @@ const DashboardMedecin = (props) => {
               onClick={() => handleClick()}
               className={styles.prescriptionNumber}
             >
-              {prescriptionLength}
+              {patientAllOfMedecinLength}
             </p>
           </div>
           <div className={isOpen ? styles.contentOpen : styles.contentClose}>
-            {prescriptions.map((prescription) => {
+            {patientAllOfMedecin.map((patient) => {
               return (
-                <div>
-                  <Link to={`/ordonnance-details/${prescription.id}`}>
-                    <p className={styles.prescriptionName}>
-                      Ordonnance n°{prescription.id}
-                    </p>
-                    <p className={styles.prescriptionDescription}>
-                      Medecin : {prescription.nom} {prescription.prenom}
-                    </p>
-                  </Link>
+                <div key={patient.id}>
+                  <p className={styles.prescriptionName}>
+                    {patient.nom} {patient.prenom}
+                  </p>
                 </div>
               );
             })}
@@ -160,7 +165,7 @@ const DashboardMedecin = (props) => {
           <p className={styles.notifTitle}>To Do List</p>
         </div>
         <div className={styles.createOrdo}>
-          <Link to='/ordonnance-creation'></Link>
+          <Link to="/ordonnance-creation"></Link>
           <p className={styles.ordoPlus}>+</p>
           <p className={styles.notifTitle}>New Prescription</p>
         </div>
@@ -181,16 +186,16 @@ const DashboardMedecin = (props) => {
         </div> */}
       </div>
       <div className={styles.bottom}>
-        <Link to='/'>
+        <Link to="/">
           <div className={styles.disconnect}>
             <img
               src={discoIcon}
-              alt='disconnection icon'
+              alt="disconnection icon"
               className={styles.discoIcon}
             />
           </div>
         </Link>
-        <div onClick='' className={styles.drugHistory}>
+        <div onClick="" className={styles.drugHistory}>
           <p>Useful Contacts</p>
           <p className={styles.subtitleEmergency}>For Emergency</p>
         </div>
