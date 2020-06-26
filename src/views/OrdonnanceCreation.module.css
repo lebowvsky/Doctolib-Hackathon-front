@@ -1,0 +1,164 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+* {
+  font-family: 'Roboto', sans-serif;
+}
+
+.all {
+  height: 95vh;
+}
+
+.title {
+  color: #204357;
+  font-weight: 700;
+  font-size: 1.1rem;
+  margin-top: 15px;
+}
+
+.AddPatientButton {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 20%;
+  height: 50px;
+  border-radius: 20px;
+  border: none;
+  background: #f2f2f2;
+  box-shadow: 5px 5px 10px #cecece, -5px -5px 10px #ffffff;
+  font-weight: 200;
+}
+
+.FlexForm {
+  display: flex;
+  justify-content: space-between;
+  align-content: space-between;
+  align-items: center;
+  width: 50%;
+}
+
+.MarginDiv {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.FlexDiv {
+  margin-top: 40px;
+  width: 50%;
+}
+
+.createPrescription {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 20%;
+  height: 50px;
+  margin-top: 40px;
+  border-radius: 20px;
+  border: none;
+  background: #f2f2f2;
+  box-shadow: 5px 5px 10px #cecece, -5px -5px 10px #ffffff;
+  font-weight: 200;
+  text-align: center;
+}
+
+.FlexCenter {
+  display: flex;
+  justify-content: center;
+}
+
+.choosePatient {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  width: 100%;
+}
+
+.FirstTitle {
+  display: flex;
+  justify-content: center;
+  width: 40%;
+}
+
+.SecondTitle {
+  width: 60%;
+  display: flex;
+  justify-content: center;
+}
+
+.showAll {
+  display: flex;
+  flex-direction: column;
+}
+
+.noShowAll {
+  display: none;
+}
+
+.Form {
+  margin-left: 20px;
+  text-indent: 2rem;
+  width: 200px;
+  height: 50px;
+  border-radius: 43px;
+  background: #f5f5f5;
+  box-shadow: inset 7px 7px 14px #d0d0d0, inset -7px -7px 14px #ffffff;
+  border: none;
+}
+
+.text {
+  font-weight: 300;
+}
+
+.NewOrNotPatient {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.topPage {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.topLeft {
+  display: flex;
+  width: 50%;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  margin-right: 10px;
+}
+
+.back {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50px;
+  width: 50px;
+  border-radius: 100px;
+  background: #f2f2f2;
+  box-shadow: 5px 5px 10px #cecece, -5px -5px 10px #ffffff;
+}
+
+.homeIcon {
+  width: 55%;
+}
+
+.title {
+  color: #204357;
+  font-weight: 700;
+  font-size: 1.1rem;
+  margin-top: 15px;
+}
+
+.prenom {
+  margin-top: 0;
+  font-size: 0.8rem;
+  font-weight: 200;
+}

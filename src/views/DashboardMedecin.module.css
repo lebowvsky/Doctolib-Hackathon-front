@@ -204,12 +204,14 @@
 
 .ordoPlus {
   padding-right: 15px;
+  padding-top: 15px;
   color: #00bbdd;
-  align-self: flex-end;
   font-size: 2.5em;
   font-weight: 700;
   margin-bottom: -1rem;
   margin-top: -0.5rem;
+  display: flex;
+  justify-content: flex-end;
 }
 
 .bottom {

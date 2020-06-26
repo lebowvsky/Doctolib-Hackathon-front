@@ -1,18 +1,18 @@
-import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import styles from "./DashboardMedecin.module.css";
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import styles from './DashboardMedecin.module.css';
 
-import axios from "axios";
-import { connect } from "react-redux";
+import axios from 'axios';
+import { connect } from 'react-redux';
 import {
   changePatientId,
   changePatientFirstname,
   changePatientLastname,
-} from "../actions/patientActions";
-import { changeOrdonnancesId } from "../actions/ordonnanceActions";
-import HomeIcon from "../medias/home-button.svg";
-import discoIcon from "../medias/disconnect-button.svg";
-import Clock from "./Clock";
+} from '../actions/patientActions';
+import { changeOrdonnancesId } from '../actions/ordonnanceActions';
+import HomeIcon from '../medias/home-button.svg';
+import discoIcon from '../medias/disconnect-button.svg';
+import Clock from './Clock';
 
 const DashboardMedecin = (props) => {
   const [patientAllOfMedecin, setPatientAllOfMedecin] = useState([]);
@@ -28,12 +28,12 @@ const DashboardMedecin = (props) => {
 
   const [isOpen, setIsOpen] = useState(false);
   const [prescriptions, setPrescriptions] = useState([]);
-  const [error, setError] = useState("");
+  const [error, setError] = useState('');
   const [prescriptionLength, setLength] = useState();
 
   useEffect(() => {
     axios
-      .get("http://localhost:8080/api/patients")
+      .get('http://localhost:8080/api/patients')
       .then((response) => response.data)
       .then((data) => {
         setPatientAll(data);
@@ -77,10 +77,10 @@ const DashboardMedecin = (props) => {
   const handleAddMedoc = (e) => {
     e.preventDefault();
     axios
-      .post("http://localhost:8080/api/produits", { nom: medocToAdd })
+      .post('http://localhost:8080/api/produits', { nom: medocToAdd })
       .then((res) => res.data)
       .then((res) => {
-        alert("Medoc ajouté");
+        alert('Medoc ajouté');
       })
       .catch((e) => {
         console.error(e);
@@ -91,15 +91,15 @@ const DashboardMedecin = (props) => {
   const handleCreateOrdonnance = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:8080/api/ordonnances", {
+      await axios.post('http://localhost:8080/api/ordonnances', {
         id_patient: props.patient.id,
         id_medecin: props.medecin.id,
       });
       const lastOrdoId = await axios.get(
-        "http://localhost:8080/api/ordonnances/last"
+        'http://localhost:8080/api/ordonnances/last'
       );
       props.changeOrdonnancesId(lastOrdoId.data[0].id);
-      props.history.push("/ordonnance-creation");
+      props.history.push('/ordonnance-creation');
     } catch (err) {
       setCatchError(err);
     }
@@ -132,12 +132,10 @@ const DashboardMedecin = (props) => {
               isOpen
                 ? styles.prescriptionInfosOpen
                 : styles.prescriptionInfosClose
-            }
-          >
+            }>
             <p
               onClick={() => handleClick()}
-              className={styles.prescriptionTitle}
-            >
+              className={styles.prescriptionTitle}>
               My patients
             </p>
             <p
@@ -165,8 +163,9 @@ const DashboardMedecin = (props) => {
           <p className={styles.notifTitle}>To Do List</p>
         </div>
         <div className={styles.createOrdo}>
-          <Link to="/ordonnance-creation"></Link>
-          <p className={styles.ordoPlus}>+</p>
+          <Link to='/ordonnance-creation'>
+            <p className={styles.ordoPlus}>+</p>
+          </Link>
           <p className={styles.notifTitle}>New Prescription</p>
         </div>
         {/* <div id='medocs'>

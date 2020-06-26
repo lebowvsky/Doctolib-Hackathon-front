@@ -1,14 +1,18 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-import { connect } from "react-redux";
-import style from "./OrdonnanceCreation.module.css";
-import Medoc from "../components/Medoc";
-import { changeOrdonnancesId } from "../actions/ordonnanceActions";
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { connect } from 'react-redux';
+
+import Medoc from '../components/Medoc';
+import { changeOrdonnancesId } from '../actions/ordonnanceActions';
 import {
   changePatientId,
   changePatientFirstname,
   changePatientLastname,
-} from "../actions/patientActions";
+} from '../actions/patientActions';
+import Clock from './Clock';
+import HomeIcon from '../medias/home-button.svg';
+
+import styles from './OrdonnanceCreation.module.css';
 
 const OrdonnanceCreation = (props) => {
   const [patientAll, setPatientAll] = useState([]);
@@ -30,17 +34,18 @@ const OrdonnanceCreation = (props) => {
   const [dateStart, setDateStart] = useState();
   const [dateEnd, setDateEnd] = useState();
   const [catchError, setCatchError] = useState();
+  const [showAll, setShowAll] = useState(false);
 
   useEffect(() => {
     axios
-      .get("http://localhost:8080/api/patients")
+      .get('http://localhost:8080/api/patients')
       .then((response) => response.data)
       .then((data) => {
         setPatientAll(data);
       });
 
     axios
-      .get("http://localhost:8080/api/produits")
+      .get('http://localhost:8080/api/produits')
       .then((response) => response.data)
       .then((data) => {
         setMedocAll(data);
@@ -72,11 +77,11 @@ const OrdonnanceCreation = (props) => {
   const handleAddPatient = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:8080/api/patients", {
+      await axios.post('http://localhost:8080/api/patients', {
         nom: patientAddLastname,
         prenom: patientAddFirstName,
       });
-      const addAllPat = await axios.get("http://localhost:8080/api/patients");
+      const addAllPat = await axios.get('http://localhost:8080/api/patients');
       setPatientAll(addAllPat.data);
     } catch (err) {
       setCatchError(err);
@@ -90,10 +95,10 @@ const OrdonnanceCreation = (props) => {
   const handleAddMedoc = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:8080/api/produits", {
+      await axios.post('http://localhost:8080/api/produits', {
         nom: medocToAdd,
       });
-      const addedMedoc = await axios.get("http://localhost:8080/api/produits");
+      const addedMedoc = await axios.get('http://localhost:8080/api/produits');
       setMedocAll(addedMedoc.data);
     } catch (err) {
       setCatchError(err);
@@ -142,16 +147,17 @@ const OrdonnanceCreation = (props) => {
 
   const handleCreateOrdonnance = async (e) => {
     e.preventDefault();
+    setShowAll(true);
     try {
-      await axios.post("http://localhost:8080/api/ordonnances", {
+      await axios.post('http://localhost:8080/api/ordonnances', {
         id_patient: props.patient.id,
         id_medecin: props.medecin.id,
       });
       const lastOrdoId = await axios.get(
-        "http://localhost:8080/api/ordonnances/last"
+        'http://localhost:8080/api/ordonnances/last'
       );
       props.changeOrdonnancesId(lastOrdoId.data[0].id);
-      props.history.push("/ordonnance-creation");
+      props.history.push('/ordonnance-creation');
     } catch (err) {
       setCatchError(err);
     }
@@ -160,7 +166,7 @@ const OrdonnanceCreation = (props) => {
   const handleSubmitCommande = (e) => {
     e.preventDefault();
     axios
-      .post("http://localhost:8080/api/commandes", {
+      .post('http://localhost:8080/api/commandes', {
         quantite_matin: morningMedocQuantity,
         quantite_midi: noonMedocQuantity,
         quantite_soir: eveningMedocQuantity,
@@ -172,7 +178,7 @@ const OrdonnanceCreation = (props) => {
       })
       .then((res) => res.data)
       .then((res) => {
-        alert("Commande ajoutée");
+        alert('Commande ajoutée');
       })
       .catch((e) => {
         console.error(e);
@@ -185,83 +191,132 @@ const OrdonnanceCreation = (props) => {
   };
 
   return (
-    <div className={style.all}>
-      <h2>Create a prescription</h2>
-      <div>
-        <button onClick={handleCreateOrdonnance}>Create prescription</button>
+    <div className={styles.all}>
+      <div className={styles.topPage}>
+        <div className={styles.topLeft}>
+          <div className={styles.back}>
+            <img src={HomeIcon} alt='home icon' className={styles.homeIcon} />
+          </div>
+          <div className={styles.title}>
+            Create Prescription
+            <p className={styles.prenom}>
+              {props.medecin.nom} {props.medecin.prenom}
+            </p>
+          </div>
+        </div>
+        <Clock />
       </div>
-      <div id="choose-patient">
+      <div className={styles.choosePatient}>
+        <div className={styles.FirstTitle}>
+          <h3 className={styles.title}>Choose a patient</h3>
+        </div>
+        <div className={styles.SecondTitle}>
+          <h3 className={styles.title}>or add a new one</h3>
+        </div>
+      </div>
+      <div className={styles.NewOrNotPatient} id='choose-patient'>
         <form>
-          <h3>Choose a patient</h3>
-          <label htmlFor="patient">Patient</label>
-          <select name="patient" id="patient" onChange={handleSelectPatient}>
+          <label className={styles.text} htmlFor='patient' />
+          <select
+            className={styles.Form}
+            name='patient'
+            id='patient'
+            onChange={handleSelectPatient}>
             {patientAll.map((patient) => {
               return (
                 <option
-                  value={`${patient.id}`}
-                >{`${patient.nom} ${patient.prenom}`}</option>
+                  value={`${patient.id}`}>{`${patient.nom} ${patient.prenom}`}</option>
               );
             })}
           </select>
         </form>
-
-        <form id="add-patient" onSubmit={handleAddPatient}>
-          <label htmlFor="new_patient_firstname">Firstname</label>
-          <input
-            type="text"
-            name="new_patient_firstname"
-            id="new_patient_firstname"
-            placeholder="new patient firstname"
-            onChange={handleAddPatientFirstname}
-          />
-
-          <label htmlFor="new_patient_name">Lastname</label>
-          <input
-            type="text"
-            name="new_patient_lastname"
-            id="new_patient_lastname"
-            placeholder="new patient lastname"
-            onChange={handleAddPatientLastname}
-          />
-          <button type="submit">Add patient</button>
+        <form
+          className={styles.FlexForm}
+          id='add-patient'
+          onSubmit={handleAddPatient}>
+          <div className={styles.choosePatient}>
+            <div className={styles.formGroup}>
+              <label htmlFor='new_patient_firstname' />
+              <input
+                className={styles.Form}
+                type='text'
+                name='new_patient_firstname'
+                id='new_patient_firstname'
+                placeholder='new patient firstname'
+                onChange={handleAddPatientFirstname}
+              />
+            </div>
+            <div className={styles.formGroup}>
+              <label htmlFor='new_patient_name' />
+              <input
+                className={styles.Form}
+                type='text'
+                name='new_patient_lastname'
+                id='new_patient_lastname'
+                placeholder='new patient lastname'
+                onChange={handleAddPatientLastname}
+              />
+            </div>
+            <button className={styles.AddPatientButton} type='submit'>
+              Add patient
+            </button>
+          </div>
         </form>
       </div>
+      <div className={styles.FlexCenter}>
+        <div
+          className={styles.createPrescription}
+          onClick={handleCreateOrdonnance}>
+          Validate
+        </div>
+      </div>
 
-      <div id="medocs">
-        <form id="add_medoc" onSubmit={handleAddMedoc}>
-          <div>
-            <label htmlFor="new_medoc_name">drug's name</label>
+      {/* MEDOC */}
+      <div className={showAll ? styles.showAll : styles.noShowAll}>
+        <div className={styles.FlexDiv}>
+          <form
+            id='add_medoc'
+            className={styles.MarginDiv}
+            onSubmit={handleAddMedoc}>
+            <label className={styles.text} htmlFor='new_medoc_name'>
+              Add a new drug
+            </label>
             <input
-              type="text"
-              name="new_medoc_name"
-              id="new_medoc_name"
+              className={styles.Form}
+              type='text'
+              name='new_medoc_name'
+              id='new_medoc_name'
               placeholder="drug's name"
               onChange={addMedocOnHooks}
             />
-          </div>
-          <button type="submit">Add Drug</button>
-        </form>
-      </div>
-
-      <div id="ordonnance">
-        <h3>{`${patientSelectedFirstname} ${patientSelectedLastname}`}</h3>
-        <Medoc
-          medocAll={medocAll}
-          handleSubmitCommande={handleSubmitCommande}
-          handleSelectMedoc={handleSelectMedoc}
-          morningCheck={morningCheck}
-          noonCheck={noonCheck}
-          eveningCheck={eveningCheck}
-          medocDateStart={medocDateStart}
-          medocDateEnd={medocDateEnd}
-          morningQuantity={morningQuantity}
-          noonQuantity={noonQuantity}
-          eveningQuantity={eveningQuantity}
-          handleComment={handleComment}
-          isMorningTrue={morning}
-          isNoonTrue={noon}
-          isEveningTrue={evening}
-        />
+            <button className={styles.AddPatientButton} type='submit'>
+              Add Drug
+            </button>
+          </form>
+        </div>
+        <div id='ordonnance'>
+          <h3
+            className={
+              styles.title
+            }>{`${patientSelectedFirstname} ${patientSelectedLastname}`}</h3>
+          <Medoc
+            medocAll={medocAll}
+            handleSubmitCommande={handleSubmitCommande}
+            handleSelectMedoc={handleSelectMedoc}
+            morningCheck={morningCheck}
+            noonCheck={noonCheck}
+            eveningCheck={eveningCheck}
+            medocDateStart={medocDateStart}
+            medocDateEnd={medocDateEnd}
+            morningQuantity={morningQuantity}
+            noonQuantity={noonQuantity}
+            eveningQuantity={eveningQuantity}
+            handleComment={handleComment}
+            isMorningTrue={morning}
+            isNoonTrue={noon}
+            isEveningTrue={evening}
+          />
+        </div>
       </div>
     </div>
   );
