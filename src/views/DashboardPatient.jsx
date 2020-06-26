@@ -69,8 +69,12 @@ const DashboardPatient = (props) => {
       return Bip();
     }, 
     // timeBip
-    4000);
+    8000);
     return () => clearTimeout(timer);
+  };
+
+  const handleClick2 = () => {
+    setIsOpen(!isOpen);
   };
 
   return (
@@ -106,7 +110,7 @@ const DashboardPatient = (props) => {
               My prescriptions
             </p>
             <p
-              onClick={() => handleClick()}
+              onClick={() => handleClick2()}
               className={styles.prescriptionNumber}
             >
               {prescriptionLength}
