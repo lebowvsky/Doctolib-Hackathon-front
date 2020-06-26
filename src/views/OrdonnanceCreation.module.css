@@ -37,9 +37,13 @@
   width: 50%;
 }
 
+#blueName {
+  color: #00bbdd;
+}
+
 .MarginDiv {
   display: flex;
-  justify-content: space-evenly;
+  justify-content: flex-start;
   align-items: center;
 }
 
@@ -148,6 +152,7 @@
 
 .homeIcon {
   width: 55%;
+  margin-left: 12px;
 }
 
 .title {

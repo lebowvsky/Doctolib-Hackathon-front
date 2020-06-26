@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-import { connect } from "react-redux";
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 import Medoc from "../components/Medoc";
 import { changeOrdonnancesId } from "../actions/ordonnanceActions";
@@ -208,7 +209,9 @@ const OrdonnanceCreation = (props) => {
       <div className={styles.topPage}>
         <div className={styles.topLeft}>
           <div className={styles.back}>
-            <img src={HomeIcon} alt="home icon" className={styles.homeIcon} />
+            <Link to='/dashboard-medecin'>
+              <img src={HomeIcon} alt='home icon' className={styles.homeIcon} />
+            </Link>
           </div>
           <div className={styles.title}>
             Create Prescription
@@ -290,32 +293,33 @@ const OrdonnanceCreation = (props) => {
 
       {/* MEDOC */}
       <div className={showAll ? styles.showAll : styles.noShowAll}>
-        <div className={styles.FlexDiv}>
-          <form
-            id="add_medoc"
-            className={styles.MarginDiv}
-            onSubmit={handleAddMedoc}
-          >
-            <label className={styles.text} htmlFor="new_medoc_name">
-              Add a new drug
-            </label>
-            <input
-              className={styles.Form}
-              type="text"
-              name="new_medoc_name"
-              id="new_medoc_name"
-              placeholder="drug's name"
-              onChange={addMedocOnHooks}
-            />
-            <button className={styles.AddPatientButton} type="submit">
-              Add Drug
-            </button>
-          </form>
-        </div>
-        <div id="ordonnance">
+        <div id='ordonnance'>
           <h3
-            className={styles.title}
-          >{`${patientSelectedFirstname} ${patientSelectedLastname}`}</h3>
+            id={styles.blueName}
+            className={
+              styles.title
+            }>{`${patientSelectedFirstname} ${patientSelectedLastname}`}</h3>
+          <div className={styles.FlexDiv}>
+            <form
+              id='add_medoc'
+              className={styles.MarginDiv}
+              onSubmit={handleAddMedoc}>
+              <label className={styles.text} htmlFor='new_medoc_name'>
+                <h3 className={styles.title}>Create a new drug</h3>
+              </label>
+              <input
+                className={styles.Form}
+                type='text'
+                name='new_medoc_name'
+                id='new_medoc_name'
+                placeholder="drug's name"
+                onChange={addMedocOnHooks}
+              />
+              <button className={styles.AddPatientButton} type='submit'>
+                Create new drug
+              </button>
+            </form>
+          </div>
           <Medoc
             medocAll={medocAll}
             handleSubmitCommande={handleSubmitCommande}
