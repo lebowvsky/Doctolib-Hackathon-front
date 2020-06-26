@@ -39,7 +39,7 @@ const DashboardPatient = (props) => {
         <div className={styles.topPage}>
           <div className={styles.topLeft}>
             <div className={styles.back}>
-              <img src={HomeIcon} alt="home icon" className={styles.homeIcon}/>
+              <img src={HomeIcon} alt='home icon' className={styles.homeIcon} />
             </div>
             <div className={styles.title}>
               My Dashboard
@@ -100,7 +100,11 @@ const DashboardPatient = (props) => {
       <div className={styles.bottom}>
         <Link to='/'>
           <div className={styles.disconnect}>
-            <img src={discoIcon} alt="disconnection icon" className={styles.discoIcon}/>
+            <img
+              src={discoIcon}
+              alt='disconnection icon'
+              className={styles.discoIcon}
+            />
           </div>
         </Link>
         <div onClick='' className={styles.drugHistory}>

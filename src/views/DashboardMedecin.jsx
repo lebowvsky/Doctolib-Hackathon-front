@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import styles from "./DashboardMedecin.module.css";
 
 import axios from "axios";
 import { connect } from "react-redux";
@@ -9,6 +10,9 @@ import {
   changePatientLastname,
 } from "../actions/patientActions";
 import { changeOrdonnancesId } from "../actions/ordonnanceActions";
+import HomeIcon from "../medias/home-button.svg";
+import discoIcon from "../medias/disconnect-button.svg";
+import Clock from "./Clock";
 
 const DashboardMedecin = (props) => {
   const [patientAll, setPatientAll] = useState([]);
@@ -19,6 +23,11 @@ const DashboardMedecin = (props) => {
   const [patientAddLastname, setPatientAddLastname] = useState();
   const [medocToAdd, setMedocToAdd] = useState();
   const [catchError, setCatchError] = useState();
+
+  const [isOpen, setIsOpen] = useState(false);
+  const [prescriptions, setPrescriptions] = useState([]);
+  const [error, setError] = useState("");
+  const [prescriptionLength, setLength] = useState();
 
   useEffect(() => {
     axios
@@ -50,20 +59,6 @@ const DashboardMedecin = (props) => {
   const handleAddPatientLastname = (e) => {
     setPatientAddLastname(e.target.value);
   };
-
-  /* const handleAddPatient = async (e) => {
-    e.preventDefault();
-    try {
-      await axios.post("http://localhost:8080/api/patients", {
-        nom: patientAddLastname,
-        prenom: patientAddFirstName,
-      });
-      const addAllPat = await axios.get("http://localhost:8080/api/patients");
-      setPatientAll(addAllPat.data);
-    } catch (err) {
-      setCatchError(err);
-    }
-  }; */
 
   const addMedocOnHooks = (e) => {
     setMedocToAdd(e.target.value);
@@ -100,75 +95,107 @@ const DashboardMedecin = (props) => {
     }
   };
 
+  const handleClick = () => {
+    setIsOpen(!isOpen);
+  };
+
   return (
-    <>
-      <h2>DashboardMedecin</h2>
-      <div>Date/heure</div>
-      <div>
-        <Link to="/patients">
-          <button>Patients</button>
-        </Link>
-        <Link to="/ordonnance-creation">
-          <button>Ordonnance</button>
-        </Link>
-      </div>
-      {/* <div>
-        <button onClick={handleCreateOrdonnance}>Create prescription</button>
-      </div> */}
-      {/* <div id="choose-patient">
-        <form>
-          <h3>Choose a patient</h3>
-          <label htmlFor="patient">Patient</label>
-          <select name="patient" id="patient" onChange={handleSelectPatient}>
-            {patientAll.map((patient) => {
+    <div className={styles.container}>
+      <div className={styles.dashboard}>
+        <div className={styles.topPage}>
+          <div className={styles.topLeft}>
+            <div className={styles.back}>
+              <img src={HomeIcon} alt='home icon' className={styles.homeIcon} />
+            </div>
+            <div className={styles.title}>
+              My Dashboard
+              <p className={styles.prenom}>
+                {props.patient.nom} {props.patient.prenom}
+              </p>
+            </div>
+          </div>
+          <Clock />
+        </div>
+        <div className={isOpen ? styles.open : styles.close}>
+          <div
+            className={
+              isOpen
+                ? styles.prescriptionInfosOpen
+                : styles.prescriptionInfosClose
+            }
+          >
+            <p
+              onClick={() => handleClick()}
+              className={styles.prescriptionTitle}
+            >
+              My patients
+            </p>
+            <p
+              onClick={() => handleClick()}
+              className={styles.prescriptionNumber}
+            >
+              {prescriptionLength}
+            </p>
+          </div>
+          <div className={isOpen ? styles.contentOpen : styles.contentClose}>
+            {prescriptions.map((prescription) => {
               return (
-                <option
-                  value={`${patient.id}`}
-                >{`${patient.nom} ${patient.prenom}`}</option>
+                <div>
+                  <Link to={`/ordonnance-details/${prescription.id}`}>
+                    <p className={styles.prescriptionName}>
+                      Ordonnance n°{prescription.id}
+                    </p>
+                    <p className={styles.prescriptionDescription}>
+                      Medecin : {prescription.nom} {prescription.prenom}
+                    </p>
+                  </Link>
+                </div>
               );
             })}
-          </select>
-        </form>
-      </div> */}
-      <div id="medocs">
-        <form id="add_medoc" onSubmit={handleAddMedoc}>
-          <div>
-            <label htmlFor="new_medoc_name">drug's name</label>
-            <input
-              type="text"
-              name="new_medoc_name"
-              id="new_medoc_name"
-              placeholder="drug's name"
-              onChange={addMedocOnHooks}
-            />
           </div>
-          <button type="submit">Add Drug</button>
-        </form>
-      </div>
-      {/* <div id="create-patient">
-          <form id="add-patient" onSubmit={handleAddPatient}>
-            <h3>Create a patient</h3>
-            <label htmlFor="new_patient_firstname">Firstname</label>
-            <input
-              type="text"
-              name="new_patient_firstname"
-              id="new_patient_firstname"
-              placeholder="new patient firstname"
-              onChange={handleAddPatientFirstname}
-            />
+        </div>
 
-            <label htmlFor="new_patient_name">Lastname</label>
-            <input
-              type="text"
-              name="new_patient_lastname"
-              id="new_patient_lastname"
-              placeholder="new patient lastname"
-              onChange={handleAddPatientLastname}
-            />
-            <button type="submit">Add patient</button>
+        <div className={styles.reminder}>
+          <p className={styles.notifNumber}>8</p>
+          <p className={styles.notifTitle}>To Do List</p>
+        </div>
+        <div className={styles.createOrdo}>
+          <Link to='/ordonnance-creation'></Link>
+          <p className={styles.ordoPlus}>+</p>
+          <p className={styles.notifTitle}>New Prescription</p>
+        </div>
+        {/* <div id='medocs'>
+          <form id='add_medoc' onSubmit={handleAddMedoc}>
+            <div>
+              <label htmlFor='new_medoc_name'>drug's name</label>
+              <input
+                type='text'
+                name='new_medoc_name'
+                id='new_medoc_name'
+                placeholder="drug's name"
+                onChange={addMedocOnHooks}
+              />
+            </div>
+            <button type='submit'>Add Drug</button>
           </form>
         </div> */}
-    </>
+      </div>
+      <div className={styles.bottom}>
+        <Link to='/'>
+          <div className={styles.disconnect}>
+            <img
+              src={discoIcon}
+              alt='disconnection icon'
+              className={styles.discoIcon}
+            />
+          </div>
+        </Link>
+        <div onClick='' className={styles.drugHistory}>
+          <p>Useful Contacts</p>
+          <p className={styles.subtitleEmergency}>For Emergency</p>
+        </div>
+      </div>
+    </div>
   );
 };
 
