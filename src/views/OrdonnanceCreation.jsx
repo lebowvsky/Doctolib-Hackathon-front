@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import Medoc from '../components/Medoc';
@@ -195,7 +196,9 @@ const OrdonnanceCreation = (props) => {
       <div className={styles.topPage}>
         <div className={styles.topLeft}>
           <div className={styles.back}>
-            <img src={HomeIcon} alt='home icon' className={styles.homeIcon} />
+            <Link to='/dashboard-medecin'>
+              <img src={HomeIcon} alt='home icon' className={styles.homeIcon} />
+            </Link>
           </div>
           <div className={styles.title}>
             Create Prescription
