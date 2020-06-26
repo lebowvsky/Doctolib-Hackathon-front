@@ -5,6 +5,8 @@ import styles from "./DashboardPatient.module.css";
 import { Link } from "react-router-dom";
 
 import Clock from "./Clock";
+import HomeIcon from "../medias/home-button.svg";
+import discoIcon from "../medias/disconnect-button.svg";
 
 const DashboardPatient = (props) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -36,7 +38,9 @@ const DashboardPatient = (props) => {
       <div className={styles.dashboard}>
         <div className={styles.topPage}>
           <div className={styles.topLeft}>
-            <div className={styles.back}>D</div>
+            <div className={styles.back}>
+              <img src={HomeIcon} alt="home icon" className={styles.homeIcon}/>
+            </div>
             <div className={styles.title}>
               My Dashboard
               <p className={styles.prenom}>
@@ -95,7 +99,9 @@ const DashboardPatient = (props) => {
       </div>
       <div className={styles.bottom}>
         <Link to='/'>
-          <div className={styles.disconnect}>Q</div>
+          <div className={styles.disconnect}>
+            <img src={discoIcon} alt="disconnection icon" className={styles.discoIcon}/>
+          </div>
         </Link>
         <div onClick='' className={styles.drugHistory}>
           <p>My drug history</p>
