@@ -35,6 +35,10 @@ html {
   box-shadow: 5px 5px 10px #cecece, -5px -5px 10px #ffffff;
 }
 
+.back:hover {
+  box-shadow: 10px 10px 15px #cecece, -10px -10px 5px #ffffff;
+}
+
 .prenom {
   margin-top: 0;
   font-size: 0.8rem;
@@ -129,6 +133,10 @@ html {
   box-shadow: 5px 5px 10px #cecece, -5px -5px 10px #ffffff;
 }
 
+.drugHistory:hover {
+  box-shadow: 10px 10px 15px #cecece, -10px -10px 5px #ffffff;
+}
+
 .subtitleEmergency {
   color: orange;
   font-size: 0.7rem;
@@ -180,6 +188,10 @@ html {
   font-weight: 200;
 }
 
+.reminder:hover {
+  box-shadow: 10px 10px 15px #cecece, -10px -10px 5px #ffffff;
+}
+
 .new {
   display: flex;
   flex-direction: column;
@@ -192,6 +204,10 @@ html {
   background: #f2f2f2;
   box-shadow: 5px 5px 10px #cecece, -5px -5px 10px #ffffff;
   font-weight: 200;
+}
+
+.new:hover {
+  box-shadow: 10px 10px 15px #cecece, -10px -10px 5px #ffffff;
 }
 
 .notifTitle {
@@ -236,6 +252,10 @@ html {
   width: 60px;
   background: #f2f2f2;
   box-shadow: 5px 5px 10px #cecece, -5px -5px 10px #ffffff;
+}
+
+.disconnect:hover {
+  box-shadow: 10px 10px 15px #cecece, -10px -10px 5px #ffffff;
 }
 
 .bottom {
