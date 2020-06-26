@@ -256,3 +256,29 @@
   font-weight: 200;
   margin-top: -0.8rem;
 }
+
+@media screen and (min-width: 561px) {
+  .createOrdo {
+    margin-top: 0;
+  }
+
+  .reminder {
+    margin-right: 15px;
+  }
+
+  .open {
+    margin-bottom: 15px;
+  }
+
+  .homeIcon {
+    width: 55%;
+  }
+
+  .discoIcon {
+    width: 40%;
+  }
+
+  .disconnect {
+    margin-top: 15px;
+  }
+}
