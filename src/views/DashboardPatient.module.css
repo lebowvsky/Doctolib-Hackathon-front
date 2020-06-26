@@ -133,6 +133,10 @@ html {
   box-shadow: 5px 5px 10px #cecece, -5px -5px 10px #ffffff;
 }
 
+.drugHistory:hover {
+  box-shadow: 10px 10px 15px #cecece, -10px -10px 5px #ffffff;
+}
+
 .subtitleEmergency {
   color: orange;
   font-size: 0.7rem;
