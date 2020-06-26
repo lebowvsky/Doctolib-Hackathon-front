@@ -3,19 +3,21 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import Medoc from '../components/Medoc';
-import { changeOrdonnancesId } from '../actions/ordonnanceActions';
+import Medoc from "../components/Medoc";
+import { changeOrdonnancesId } from "../actions/ordonnanceActions";
 import {
   changePatientId,
   changePatientFirstname,
   changePatientLastname,
-} from '../actions/patientActions';
-import Clock from './Clock';
-import HomeIcon from '../medias/home-button.svg';
+} from "../actions/patientActions";
+import Clock from "./Clock";
+import HomeIcon from "../medias/home-button.svg";
 
-import styles from './OrdonnanceCreation.module.css';
+import styles from "./OrdonnanceCreation.module.css";
 
 const OrdonnanceCreation = (props) => {
+  const [activeMedoc, setActiveMedoc] = useState([]);
+  const [allCommandes, setAllCommandes] = useState([]);
   const [patientAll, setPatientAll] = useState([]);
   const [patientSelectedId, setPatientSelectedId] = useState();
   const [patientSelectedFirstname, setPatientSelectedFirstname] = useState();
@@ -39,18 +41,28 @@ const OrdonnanceCreation = (props) => {
 
   useEffect(() => {
     axios
-      .get('http://localhost:8080/api/patients')
+      .get("http://localhost:8080/api/patients")
       .then((response) => response.data)
       .then((data) => {
         setPatientAll(data);
       });
 
     axios
-      .get('http://localhost:8080/api/produits')
+      .get("http://localhost:8080/api/produits")
       .then((response) => response.data)
       .then((data) => {
         setMedocAll(data);
       });
+    if (props.ordonnance.id) {
+      axios
+        .get(
+          `http://localhost:8080/api/ordonnances/${props.ordonnance.id}/commandes`
+        )
+        .then((response) => response.data)
+        .then((data) => {
+          setAllCommandes(data);
+        });
+    }
   }, []);
 
   const handleSelectPatient = (e) => {
@@ -78,11 +90,11 @@ const OrdonnanceCreation = (props) => {
   const handleAddPatient = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:8080/api/patients', {
+      await axios.post("http://localhost:8080/api/patients", {
         nom: patientAddLastname,
         prenom: patientAddFirstName,
       });
-      const addAllPat = await axios.get('http://localhost:8080/api/patients');
+      const addAllPat = await axios.get("http://localhost:8080/api/patients");
       setPatientAll(addAllPat.data);
     } catch (err) {
       setCatchError(err);
@@ -96,10 +108,10 @@ const OrdonnanceCreation = (props) => {
   const handleAddMedoc = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:8080/api/produits', {
+      await axios.post("http://localhost:8080/api/produits", {
         nom: medocToAdd,
       });
-      const addedMedoc = await axios.get('http://localhost:8080/api/produits');
+      const addedMedoc = await axios.get("http://localhost:8080/api/produits");
       setMedocAll(addedMedoc.data);
     } catch (err) {
       setCatchError(err);
@@ -150,24 +162,24 @@ const OrdonnanceCreation = (props) => {
     e.preventDefault();
     setShowAll(true);
     try {
-      await axios.post('http://localhost:8080/api/ordonnances', {
+      await axios.post("http://localhost:8080/api/ordonnances", {
         id_patient: props.patient.id,
         id_medecin: props.medecin.id,
       });
       const lastOrdoId = await axios.get(
-        'http://localhost:8080/api/ordonnances/last'
+        "http://localhost:8080/api/ordonnances/last"
       );
       props.changeOrdonnancesId(lastOrdoId.data[0].id);
-      props.history.push('/ordonnance-creation');
+      props.history.push("/ordonnance-creation");
     } catch (err) {
       setCatchError(err);
     }
   };
 
-  const handleSubmitCommande = (e) => {
+  const handleSubmitCommande = async (e) => {
     e.preventDefault();
-    axios
-      .post('http://localhost:8080/api/commandes', {
+    try {
+      await axios.post("http://localhost:8080/api/commandes", {
         quantite_matin: morningMedocQuantity,
         quantite_midi: noonMedocQuantity,
         quantite_soir: eveningMedocQuantity,
@@ -176,15 +188,16 @@ const OrdonnanceCreation = (props) => {
         date_fin: dateEnd,
         id_produit: medocSelected,
         id_ordonnance: props.ordonnance.id,
-      })
-      .then((res) => res.data)
-      .then((res) => {
-        alert('Commande ajoutée');
-      })
-      .catch((e) => {
-        console.error(e);
-        alert(`Erreur lors de l'ajout de l'ordonnance : ${e.message}`);
       });
+      await axios
+        .get(
+          `http://localhost:8080/api/ordonnances/${props.ordonnance.id}/commandes`
+        )
+        .then((response) => response.data)
+        .then((data) => {
+          setAllCommandes(data);
+        });
+    } catch (err) {}
   };
 
   const OrdonnanceCreation = (e) => {
@@ -217,50 +230,53 @@ const OrdonnanceCreation = (props) => {
           <h3 className={styles.title}>or add a new one</h3>
         </div>
       </div>
-      <div className={styles.NewOrNotPatient} id='choose-patient'>
+      <div className={styles.NewOrNotPatient} id="choose-patient">
         <form>
-          <label className={styles.text} htmlFor='patient' />
+          <label className={styles.text} htmlFor="patient" />
           <select
             className={styles.Form}
-            name='patient'
-            id='patient'
-            onChange={handleSelectPatient}>
+            name="patient"
+            id="patient"
+            onChange={handleSelectPatient}
+          >
             {patientAll.map((patient) => {
               return (
                 <option
-                  value={`${patient.id}`}>{`${patient.nom} ${patient.prenom}`}</option>
+                  value={`${patient.id}`}
+                >{`${patient.nom} ${patient.prenom}`}</option>
               );
             })}
           </select>
         </form>
         <form
           className={styles.FlexForm}
-          id='add-patient'
-          onSubmit={handleAddPatient}>
+          id="add-patient"
+          onSubmit={handleAddPatient}
+        >
           <div className={styles.choosePatient}>
             <div className={styles.formGroup}>
-              <label htmlFor='new_patient_firstname' />
+              <label htmlFor="new_patient_firstname" />
               <input
                 className={styles.Form}
-                type='text'
-                name='new_patient_firstname'
-                id='new_patient_firstname'
-                placeholder='new patient firstname'
+                type="text"
+                name="new_patient_firstname"
+                id="new_patient_firstname"
+                placeholder="new patient firstname"
                 onChange={handleAddPatientFirstname}
               />
             </div>
             <div className={styles.formGroup}>
-              <label htmlFor='new_patient_name' />
+              <label htmlFor="new_patient_name" />
               <input
                 className={styles.Form}
-                type='text'
-                name='new_patient_lastname'
-                id='new_patient_lastname'
-                placeholder='new patient lastname'
+                type="text"
+                name="new_patient_lastname"
+                id="new_patient_lastname"
+                placeholder="new patient lastname"
                 onChange={handleAddPatientLastname}
               />
             </div>
-            <button className={styles.AddPatientButton} type='submit'>
+            <button className={styles.AddPatientButton} type="submit">
               Add patient
             </button>
           </div>
@@ -269,7 +285,8 @@ const OrdonnanceCreation = (props) => {
       <div className={styles.FlexCenter}>
         <div
           className={styles.createPrescription}
-          onClick={handleCreateOrdonnance}>
+          onClick={handleCreateOrdonnance}
+        >
           Validate
         </div>
       </div>
@@ -321,6 +338,23 @@ const OrdonnanceCreation = (props) => {
             isEveningTrue={evening}
           />
         </div>
+      </div>
+      <div id="ordonnance-paper">
+          <h3>{props.patient.prenom} {props.patient.nom}</h3>
+        {allCommandes.map((medoc) => {
+          return (
+            <div>
+              <h4>{medocAll.find((elt) => elt.id == medoc.id_produit).nom}</h4>
+              <p>
+                matin : {medoc.quantite_matin}, midi : {medoc.quantite_midi}, soir : {medoc.quantite_soir}
+              </p>
+              <p>
+                debut : {medoc.date_debut}, fin : {medoc.date_fin}
+              </p>
+              <p>{medoc.commentaire}</p>
+            </div>
+          );
+        })}
       </div>
     </div>
   );
