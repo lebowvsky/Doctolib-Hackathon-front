@@ -264,6 +264,10 @@
     margin-top: 0;
   }
 
+  .close {
+    align-items: flex-start;
+  }
+
   .reminder {
     margin-right: 15px;
   }

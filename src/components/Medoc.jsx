@@ -1,6 +1,8 @@
-import React from 'react';
+import React from "react";
+import ReactNotification from "react-notifications-component";
+import "react-notifications-component/dist/theme.css";
 
-import styles from './Medoc.module.css';
+import styles from "./Medoc.module.css";
 
 const Medoc = ({
   medocAll,
@@ -21,6 +23,7 @@ const Medoc = ({
 }) => {
   return (
     <div>
+      {/* <ReactNotification /> */}
       <form className={styles.MainContainer} onSubmit={handleSubmitCommande}>
         <div className={styles.Row}>
           <label htmlFor='medoc'>
@@ -30,7 +33,8 @@ const Medoc = ({
             className={styles.Form}
             name='medoc'
             id='medoc'
-            onChange={handleSelectMedoc}>
+            onChange={handleSelectMedoc}
+          >
             {medocAll.map((medoc) => {
               return <option value={`${medoc.id}`}>{`${medoc.nom}`}</option>;
             })}

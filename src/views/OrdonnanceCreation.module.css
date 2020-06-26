@@ -1,7 +1,7 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
 
 * {
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
 }
 
 .all {
@@ -166,4 +166,62 @@
   margin-top: 0;
   font-size: 0.8rem;
   font-weight: 200;
+}
+
+.container {
+  margin-top: 30px;
+  border-radius: 20px;
+  padding-top: 3px;
+  padding-left: 20px;
+  padding-right: 20px;
+  background: #f2f2f2;
+  box-shadow: 5px 5px 10px #cecece, -5px -5px 10px #ffffff;
+  color: #204357;
+  width: 50%;
+}
+
+.title {
+  color: #204357;
+  font-weight: 700;
+  font-size: 1.5rem;
+}
+
+.titles {
+  color: orange;
+  font-weight: 200;
+}
+
+.numero {
+  color: #204357;
+  font-size: 1.3rem;
+  font-weight: 700;
+}
+
+.emission {
+  margin-top: -15px;
+  padding-bottom: 1rem;
+}
+
+.content {
+  margin-top: 20px;
+  padding-bottom: 20px;
+}
+
+.nomMedoc {
+  color: #00bbdd;
+  text-align: center;
+}
+
+.dates {
+  margin-top: -0.7rem;
+}
+
+.posologie {
+  display: flex;
+  margin-top: -1.3rem;
+  justify-content: space-between;
+}
+
+.commentaire {
+  margin-top: -0.5rem;
 }

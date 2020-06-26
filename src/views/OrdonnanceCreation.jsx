@@ -1,7 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { Link } from 'react-router-dom';
-import { connect } from 'react-redux';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+import ReactNotification from "react-notifications-component";
+import "react-notifications-component/dist/theme.css";
+import { store } from "react-notifications-component";
 
 import Medoc from "../components/Medoc";
 import { changeOrdonnancesId } from "../actions/ordonnanceActions";
@@ -38,6 +41,38 @@ const OrdonnanceCreation = (props) => {
   const [dateEnd, setDateEnd] = useState();
   const [catchError, setCatchError] = useState();
   const [showAll, setShowAll] = useState(false);
+
+  const AddPatient = () => {
+    store.addNotification({
+      title: "Ok",
+      message: "Patient added to list",
+      type: "success",
+      insert: "top",
+      container: "top-center",
+      animationIn: ["animated", "fadeIn"],
+      animationOut: ["animated", "fadeOut"],
+      dismiss: {
+        duration: 3000,
+        onScreen: true,
+      },
+    });
+  };
+
+  const AddDrug = () => {
+    store.addNotification({
+      title: "Ok",
+      message: "Drug added to list",
+      type: "success",
+      insert: "top",
+      container: "top-center",
+      animationIn: ["animated", "fadeIn"],
+      animationOut: ["animated", "fadeOut"],
+      dismiss: {
+        duration: 3000,
+        onScreen: true,
+      },
+    });
+  };
 
   useEffect(() => {
     axios
@@ -206,6 +241,7 @@ const OrdonnanceCreation = (props) => {
 
   return (
     <div className={styles.all}>
+      <ReactNotification />
       <div className={styles.topPage}>
         <div className={styles.topLeft}>
           <div className={styles.back}>
@@ -230,13 +266,13 @@ const OrdonnanceCreation = (props) => {
           <h3 className={styles.title}>or add a new one</h3>
         </div>
       </div>
-      <div className={styles.NewOrNotPatient} id="choose-patient">
+      <div className={styles.NewOrNotPatient} id='choose-patient'>
         <form>
-          <label className={styles.text} htmlFor="patient" />
+          <label className={styles.text} htmlFor='patient' />
           <select
             className={styles.Form}
-            name="patient"
-            id="patient"
+            name='patient'
+            id='patient'
             onChange={handleSelectPatient}
           >
             {patientAll.map((patient) => {
@@ -250,33 +286,37 @@ const OrdonnanceCreation = (props) => {
         </form>
         <form
           className={styles.FlexForm}
-          id="add-patient"
+          id='add-patient'
           onSubmit={handleAddPatient}
         >
           <div className={styles.choosePatient}>
             <div className={styles.formGroup}>
-              <label htmlFor="new_patient_firstname" />
+              <label htmlFor='new_patient_firstname' />
               <input
                 className={styles.Form}
-                type="text"
-                name="new_patient_firstname"
-                id="new_patient_firstname"
-                placeholder="new patient firstname"
+                type='text'
+                name='new_patient_firstname'
+                id='new_patient_firstname'
+                placeholder='new patient firstname'
                 onChange={handleAddPatientFirstname}
               />
             </div>
             <div className={styles.formGroup}>
-              <label htmlFor="new_patient_name" />
+              <label htmlFor='new_patient_name' />
               <input
                 className={styles.Form}
-                type="text"
-                name="new_patient_lastname"
-                id="new_patient_lastname"
-                placeholder="new patient lastname"
+                type='text'
+                name='new_patient_lastname'
+                id='new_patient_lastname'
+                placeholder='new patient lastname'
                 onChange={handleAddPatientLastname}
               />
             </div>
-            <button className={styles.AddPatientButton} type="submit">
+            <button
+              className={styles.AddPatientButton}
+              type='submit'
+              onClick={AddPatient}
+            >
               Add patient
             </button>
           </div>
@@ -296,14 +336,14 @@ const OrdonnanceCreation = (props) => {
         <div id='ordonnance'>
           <h3
             id={styles.blueName}
-            className={
-              styles.title
-            }>{`${patientSelectedFirstname} ${patientSelectedLastname}`}</h3>
+            className={styles.title}
+          >{`${patientSelectedFirstname} ${patientSelectedLastname}`}</h3>
           <div className={styles.FlexDiv}>
             <form
               id='add_medoc'
               className={styles.MarginDiv}
-              onSubmit={handleAddMedoc}>
+              onSubmit={handleAddMedoc}
+            >
               <label className={styles.text} htmlFor='new_medoc_name'>
                 <h3 className={styles.title}>Create a new drug</h3>
               </label>
@@ -315,7 +355,11 @@ const OrdonnanceCreation = (props) => {
                 placeholder="drug's name"
                 onChange={addMedocOnHooks}
               />
-              <button className={styles.AddPatientButton} type='submit'>
+              <button
+                className={styles.AddPatientButton}
+                type='submit'
+                onClick={AddDrug}
+              >
                 Create new drug
               </button>
             </form>
@@ -339,19 +383,29 @@ const OrdonnanceCreation = (props) => {
           />
         </div>
       </div>
-      <div id="ordonnance-paper">
-          <h3>{props.patient.prenom} {props.patient.nom}</h3>
+      <div className={styles.container}>
+        <div className={styles.titles}>
+          <p className={styles.numero}>
+            Ordonnance de {props.patient.prenom} {props.patient.nom}
+          </p>
+        </div>
         {allCommandes.map((medoc) => {
           return (
-            <div>
-              <h4>{medocAll.find((elt) => elt.id == medoc.id_produit).nom}</h4>
-              <p>
-                matin : {medoc.quantite_matin}, midi : {medoc.quantite_midi}, soir : {medoc.quantite_soir}
+            <div className={styles.content}>
+              <p className={styles.nomMedoc}>
+                {medocAll.find((elt) => elt.id == medoc.id_produit).nom}
               </p>
-              <p>
-                debut : {medoc.date_debut}, fin : {medoc.date_fin}
+              <p className={styles.dates}>
+                à prendre du {medoc.date_debut} au {medoc.date_fin}
               </p>
-              <p>{medoc.commentaire}</p>
+              <div className={styles.posologie}>
+                <p>{medoc.quantite_matin} le matin</p>
+                <p>{medoc.quantite_midi} le midi</p>
+                <p>{medoc.quantite_soir} le soir</p>
+              </div>
+              <div className={styles.commentaire}>
+                Commentaire :{medoc.commentaire}
+              </div>
             </div>
           );
         })}
