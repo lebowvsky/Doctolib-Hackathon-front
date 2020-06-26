@@ -3,9 +3,9 @@ import { connect } from "react-redux";
 import axios from "axios";
 import styles from "./DashboardPatient.module.css";
 import { Link } from "react-router-dom";
-import ReactNotification from 'react-notifications-component';
-import 'react-notifications-component/dist/theme.css';
-import { store } from 'react-notifications-component';
+import ReactNotification from "react-notifications-component";
+import "react-notifications-component/dist/theme.css";
+import { store } from "react-notifications-component";
 
 import Clock from "./Clock";
 import HomeIcon from "../medias/home-button.svg";
@@ -16,7 +16,7 @@ const DashboardPatient = (props) => {
   const [prescriptions, setPrescriptions] = useState([]);
   const [error, setError] = useState("");
   const [prescriptionLength, setLength] = useState();
-  const [formDate, setFormDate] = useState('');
+  const [formDate, setFormDate] = useState("");
 
   useEffect(() => {
     const getPresc = async () => {
@@ -35,19 +35,19 @@ const DashboardPatient = (props) => {
 
   const Bip = () => {
     store.addNotification({
-    title: "Médicament à prendre",
-    message: "2 aspirines pendant le repas",
-    type: "info",
-    insert: "top",
-    container: "top-center",
-    animationIn: ["animated", "fadeIn"],
-    animationOut: ["animated", "fadeOut"],
-    dismiss: {
-      duration: 7000,
-      onScreen: true
-      }
+      title: "Médicament à prendre",
+      message: "2 spasfon le midi",
+      type: "info",
+      insert: "top",
+      container: "top-center",
+      animationIn: ["animated", "fadeIn"],
+      animationOut: ["animated", "fadeOut"],
+      dismiss: {
+        duration: 7000,
+        onScreen: true,
+      },
     });
-  }
+  };
 
   const handleClick = () => {
     setIsOpen(!isOpen);
@@ -65,11 +65,13 @@ const DashboardPatient = (props) => {
     // const medocDate = new Date(formDate);
     // const timeBip = medocDate - currentDate;
 
-    const timer = setTimeout(() => {
-      return Bip();
-    }, 
-    // timeBip
-    8000);
+    const timer = setTimeout(
+      () => {
+        return Bip();
+      },
+      // timeBip
+      8000
+    );
     return () => clearTimeout(timer);
   };
 

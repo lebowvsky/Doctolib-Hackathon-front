@@ -2,10 +2,10 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
-import styles from './Home.module.css';
-import doctorIcon from '../medias/doctor-02.svg';
-import patientIcon from '../medias/patient-01.svg';
-import LogoHorizontal from '../medias/logo-horizontalG-02.svg';
+import styles from "./Home.module.css";
+import doctorIcon from "../medias/doctor-02.svg";
+import patientIcon from "../medias/patient-01.svg";
+import LogoHorizontal from "../medias/logo-horizontalG-02.svg";
 import { connect } from "react-redux";
 
 import {
@@ -18,7 +18,6 @@ import {
   changePatientFirstname,
   changePatientLastname,
 } from "../actions/patientActions";
-
 
 const Home = (props) => {
   const [medecinAll, setMedecinAll] = useState([]);
@@ -76,23 +75,32 @@ const Home = (props) => {
   const handleShowMedecins = () => {
     setShowMedecins(!showMedecins);
     setShowPatients(false);
-  }
+  };
 
   const handleShowPatients = () => {
     setShowPatients(!showPatients);
     setShowMedecins(false);
-  }
+  };
 
   return (
     <div className={styles.MainDiv}>
       <div className={styles.LogoDiv}>
-        <img src={LogoHorizontal} alt="App Logo" />
-        <h2 className={styles.LogoText}>Louisette rase tout</h2>
+        <img src={LogoHorizontal} alt='App Logo' />
+        <h2 className={styles.LogoText}>My prescription</h2>
       </div>
       <div className={styles.FormDiv}>
-        <div className={showMedecins ? styles.FormMedecinShow : styles.FormMedecinNoShow}>
+        <div
+          className={
+            showMedecins ? styles.FormMedecinShow : styles.FormMedecinNoShow
+          }
+        >
           <form>
-            <select name="medecin" id="medecin" onChange={handleMedecin} className={styles.Form}>
+            <select
+              name='medecin'
+              id='medecin'
+              onChange={handleMedecin}
+              className={styles.Form}
+            >
               {medecinAll.map((medecin) => {
                 return (
                   <option
@@ -102,13 +110,22 @@ const Home = (props) => {
               })}
             </select>
           </form>
-          <Link to="/dashboard-medecin">
+          <Link to='/dashboard-medecin'>
             <div className={styles.ButtonEnter}>GO</div>
           </Link>
         </div>
-        <div className={showPatients ? styles.FormPatientShow : styles.FormPatientNoShow}>
+        <div
+          className={
+            showPatients ? styles.FormPatientShow : styles.FormPatientNoShow
+          }
+        >
           <form>
-            <select name="patient" id="patient" onChange={handlePatient} className={styles.Form}>
+            <select
+              name='patient'
+              id='patient'
+              onChange={handlePatient}
+              className={styles.Form}
+            >
               {patientAll.map((patient) => {
                 return (
                   <option
@@ -118,25 +135,25 @@ const Home = (props) => {
               })}
             </select>
           </form>
-          <Link to="/dashboard-patient">
+          <Link to='/dashboard-patient'>
             <div className={styles.ButtonEnter}>GO</div>
           </Link>
-        </div>      
+        </div>
       </div>
       <div className={styles.ButtonDiv}>
         <div className={styles.ButtonSubDiv}>
-          <div 
-            className={styles.Button}
-            onClick={handleShowMedecins}>
-              <img class={styles.ButtonImg} src={doctorIcon} alt="Doctor icon"/> 
+          <div className={styles.Button} onClick={handleShowMedecins}>
+            <img class={styles.ButtonImg} src={doctorIcon} alt='Doctor icon' />
           </div>
           <p>Doctor</p>
         </div>
         <div className={styles.ButtonSubDiv}>
-          <div 
-            className={styles.Button}
-            onClick={handleShowPatients}>
-              <img className={styles.ButtonImg} src={patientIcon} alt="Patient icon"/>
+          <div className={styles.Button} onClick={handleShowPatients}>
+            <img
+              className={styles.ButtonImg}
+              src={patientIcon}
+              alt='Patient icon'
+            />
           </div>
           <p>Patient</p>
         </div>

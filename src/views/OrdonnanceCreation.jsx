@@ -381,34 +381,34 @@ const OrdonnanceCreation = (props) => {
             isNoonTrue={noon}
             isEveningTrue={evening}
           />
-        </div>
-      </div>
-      <div className={styles.container}>
-        <div className={styles.titles}>
-          <p className={styles.numero}>
-            Ordonnance de {props.patient.prenom} {props.patient.nom}
-          </p>
-        </div>
-        {allCommandes.map((medoc) => {
-          return (
-            <div className={styles.content}>
-              <p className={styles.nomMedoc}>
-                {medocAll.find((elt) => elt.id == medoc.id_produit).nom}
+          <div className={styles.container}>
+            <div className={styles.titles}>
+              <p className={styles.numero}>
+                Ordonnance de {props.patient.prenom} {props.patient.nom}
               </p>
-              <p className={styles.dates}>
-                à prendre du {medoc.date_debut} au {medoc.date_fin}
-              </p>
-              <div className={styles.posologie}>
-                <p>{medoc.quantite_matin} le matin</p>
-                <p>{medoc.quantite_midi} le midi</p>
-                <p>{medoc.quantite_soir} le soir</p>
-              </div>
-              <div className={styles.commentaire}>
-                Commentaire :{medoc.commentaire}
-              </div>
             </div>
-          );
-        })}
+            {allCommandes.map((medoc) => {
+              return (
+                <div className={styles.content}>
+                  <p className={styles.nomMedoc}>
+                    {medocAll.find((elt) => elt.id == medoc.id_produit).nom}
+                  </p>
+                  <p className={styles.dates}>
+                    à prendre du {medoc.date_debut} au {medoc.date_fin}
+                  </p>
+                  <div className={styles.posologie}>
+                    <p>{medoc.quantite_matin} le matin</p>
+                    <p>{medoc.quantite_midi} le midi</p>
+                    <p>{medoc.quantite_soir} le soir</p>
+                  </div>
+                  <div className={styles.commentaire}>
+                    Commentaire :{medoc.commentaire}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
       </div>
     </div>
   );
