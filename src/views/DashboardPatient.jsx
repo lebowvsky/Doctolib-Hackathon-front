@@ -3,6 +3,9 @@ import { connect } from "react-redux";
 import axios from "axios";
 import styles from "./DashboardPatient.module.css";
 import { Link } from "react-router-dom";
+import ReactNotification from 'react-notifications-component';
+import 'react-notifications-component/dist/theme.css';
+import { store } from 'react-notifications-component';
 
 import Clock from "./Clock";
 import HomeIcon from "../medias/home-button.svg";
@@ -13,6 +16,7 @@ const DashboardPatient = (props) => {
   const [prescriptions, setPrescriptions] = useState([]);
   const [error, setError] = useState("");
   const [prescriptionLength, setLength] = useState();
+  const [formDate, setFormDate] = useState('');
 
   useEffect(() => {
     const getPresc = async () => {
@@ -29,12 +33,49 @@ const DashboardPatient = (props) => {
     getPresc();
   }, []);
 
+  const Bip = () => {
+    store.addNotification({
+    title: "Médicament à prendre",
+    message: "2 aspirines pendant le repas",
+    type: "info",
+    insert: "top",
+    container: "top-center",
+    animationIn: ["animated", "fadeIn"],
+    animationOut: ["animated", "fadeOut"],
+    dismiss: {
+      duration: 7000,
+      onScreen: true
+      }
+    });
+  }
+
   const handleClick = () => {
     setIsOpen(!isOpen);
+    const start = new Date();
+
+    // const today = new Date();
+    // const dd = today.getDate();
+    // const mm = today.getMonth()+1;
+    // const yyyy = today.getFullYear();
+    // const realToday = mm+' '+dd+' '+yyyy;
+
+    // const newHour = start.toLocaleTimeString("en-GB");
+
+    // const currentDate = new Date(realToday+' '+newHour);
+    // const medocDate = new Date(formDate);
+    // const timeBip = medocDate - currentDate;
+
+    const timer = setTimeout(() => {
+      return Bip();
+    }, 
+    // timeBip
+    4000);
+    return () => clearTimeout(timer);
   };
 
   return (
     <div className={styles.container}>
+      <ReactNotification />
       <div className={styles.dashboard}>
         <div className={styles.topPage}>
           <div className={styles.topLeft}>
