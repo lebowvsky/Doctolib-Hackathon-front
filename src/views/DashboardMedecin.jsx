@@ -33,14 +33,14 @@ const DashboardMedecin = (props) => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8080/api/patients")
+      .get("https://my-prescription.herokuapp.com/api/patients")
       .then((response) => response.data)
       .then((data) => {
         setPatientAll(data);
       });
 
     axios
-      .get(`http://localhost:8080/api/medecins/${props.medecin.id}/patients`)
+      .get(`https://my-prescription.herokuapp.com/api/medecins/${props.medecin.id}/patients`)
       .then((response) => response.data)
       .then((data) => {
         setPatientAllOfMedecin(data);
@@ -77,7 +77,7 @@ const DashboardMedecin = (props) => {
   const handleAddMedoc = (e) => {
     e.preventDefault();
     axios
-      .post("http://localhost:8080/api/produits", { nom: medocToAdd })
+      .post("https://my-prescription.herokuapp.com/api/produits", { nom: medocToAdd })
       .then((res) => res.data)
       .then((res) => {
         alert("Medoc ajouté");
@@ -91,12 +91,12 @@ const DashboardMedecin = (props) => {
   const handleCreateOrdonnance = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:8080/api/ordonnances", {
+      await axios.post("https://my-prescription.herokuapp.com/api/ordonnances", {
         id_patient: props.patient.id,
         id_medecin: props.medecin.id,
       });
       const lastOrdoId = await axios.get(
-        "http://localhost:8080/api/ordonnances/last"
+        "https://my-prescription.herokuapp.com/api/ordonnances/last"
       );
       props.changeOrdonnancesId(lastOrdoId.data[0].id);
       props.history.push("/ordonnance-creation");

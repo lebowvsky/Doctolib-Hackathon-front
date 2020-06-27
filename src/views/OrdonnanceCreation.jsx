@@ -76,14 +76,14 @@ const OrdonnanceCreation = (props) => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8080/api/patients")
+      .get("https://my-prescription.herokuapp.com/api/patients")
       .then((response) => response.data)
       .then((data) => {
         setPatientAll(data);
       });
 
     axios
-      .get("http://localhost:8080/api/produits")
+      .get("https://my-prescription.herokuapp.com/api/produits")
       .then((response) => response.data)
       .then((data) => {
         setMedocAll(data);
@@ -91,7 +91,7 @@ const OrdonnanceCreation = (props) => {
     if (props.ordonnance.id) {
       axios
         .get(
-          `http://localhost:8080/api/ordonnances/${props.ordonnance.id}/commandes`
+          `https://my-prescription.herokuapp.com/api/ordonnances/${props.ordonnance.id}/commandes`
         )
         .then((response) => response.data)
         .then((data) => {
@@ -103,7 +103,7 @@ const OrdonnanceCreation = (props) => {
   const handleSelectPatient = (e) => {
     setPatientSelectedId(Number(e.target.value));
     axios
-      .get(`http://localhost:8080/api/patients/${e.target.value}`)
+      .get(`https://my-prescription.herokuapp.com/api/patients/${e.target.value}`)
       .then((response) => response.data)
       .then((data) => {
         props.changePatientFirstname(data[0].prenom);
@@ -125,11 +125,11 @@ const OrdonnanceCreation = (props) => {
   const handleAddPatient = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:8080/api/patients", {
+      await axios.post("https://my-prescription.herokuapp.com/api/patients", {
         nom: patientAddLastname,
         prenom: patientAddFirstName,
       });
-      const addAllPat = await axios.get("http://localhost:8080/api/patients");
+      const addAllPat = await axios.get("https://my-prescription.herokuapp.com/api/patients");
       setPatientAll(addAllPat.data);
     } catch (err) {
       setCatchError(err);
@@ -143,10 +143,10 @@ const OrdonnanceCreation = (props) => {
   const handleAddMedoc = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:8080/api/produits", {
+      await axios.post("https://my-prescription.herokuapp.com/api/produits", {
         nom: medocToAdd,
       });
-      const addedMedoc = await axios.get("http://localhost:8080/api/produits");
+      const addedMedoc = await axios.get("https://my-prescription.herokuapp.com/api/produits");
       setMedocAll(addedMedoc.data);
     } catch (err) {
       setCatchError(err);
@@ -197,12 +197,12 @@ const OrdonnanceCreation = (props) => {
     e.preventDefault();
     setShowAll(true);
     try {
-      await axios.post("http://localhost:8080/api/ordonnances", {
+      await axios.post("https://my-prescription.herokuapp.com/api/ordonnances", {
         id_patient: props.patient.id,
         id_medecin: props.medecin.id,
       });
       const lastOrdoId = await axios.get(
-        "http://localhost:8080/api/ordonnances/last"
+        "https://my-prescription.herokuapp.com/api/ordonnances/last"
       );
       props.changeOrdonnancesId(lastOrdoId.data[0].id);
       props.history.push("/ordonnance-creation");
@@ -214,7 +214,7 @@ const OrdonnanceCreation = (props) => {
   const handleSubmitCommande = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:8080/api/commandes", {
+      await axios.post("https://my-prescription.herokuapp.com/api/commandes", {
         quantite_matin: morningMedocQuantity,
         quantite_midi: noonMedocQuantity,
         quantite_soir: eveningMedocQuantity,
@@ -226,7 +226,7 @@ const OrdonnanceCreation = (props) => {
       });
       await axios
         .get(
-          `http://localhost:8080/api/ordonnances/${props.ordonnance.id}/commandes`
+          `https://my-prescription.herokuapp.com/api/ordonnances/${props.ordonnance.id}/commandes`
         )
         .then((response) => response.data)
         .then((data) => {

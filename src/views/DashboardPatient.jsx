@@ -22,7 +22,7 @@ const DashboardPatient = (props) => {
     const getPresc = async () => {
       try {
         const prescr = await axios.get(
-          `http://localhost:8080/api/patients/${props.patient.id}/ordonnances`
+          `https://my-prescription.herokuapp.com/api/patients/${props.patient.id}/ordonnances`
         );
         setLength(prescr.data.length);
         setPrescriptions(prescr.data);
