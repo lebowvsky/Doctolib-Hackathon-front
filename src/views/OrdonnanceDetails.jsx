@@ -16,7 +16,7 @@ const OrdonnanceDetails = () => {
     const getDetails = async () => {
       try {
         const details = await axios.get(
-          `http://localhost:8080/api/ordonnances/${idOrdonnance.id}/commandes`
+          `${process.env.REACT_APP_API_URL}/api/ordonnances/${idOrdonnance.id}/commandes`
         );
         setDetails(details.data);
         setDoctor(details.data[0]);

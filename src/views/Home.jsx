@@ -34,14 +34,14 @@ const Home = (props) => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8080/api/patients")
+      .get(`${process.env.REACT_APP_API_URL}/api/patients`)
       .then((response) => response.data)
       .then((data) => {
         setPatientAll(data);
       });
 
     axios
-      .get("http://localhost:8080/api/medecins")
+      .get(`${process.env.REACT_APP_API_URL}/api/medecins`)
       .then((response) => response.data)
       .then((data) => {
         setMedecinAll(data);
@@ -52,7 +52,7 @@ const Home = (props) => {
     setMedecinId(Number(e.target.value));
     props.changeMedecinId(e.target.value);
     axios
-      .get(`http://localhost:8080/api/medecins/${e.target.value}`)
+      .get(`${process.env.REACT_APP_API_URL}/api/medecins/${e.target.value}`)
       .then((response) => response.data)
       .then((data) => {
         props.changeMedecinFirstname(data[0].prenom);
@@ -64,7 +64,7 @@ const Home = (props) => {
     setPatientId(Number(e.target.value));
     props.changePatientId(e.target.value);
     axios
-      .get(`http://localhost:8080/api/patients/${e.target.value}`)
+      .get(`${process.env.REACT_APP_API_URL}/api/patients/${e.target.value}`)
       .then((response) => response.data)
       .then((data) => {
         props.changePatientFirstname(data[0].prenom);

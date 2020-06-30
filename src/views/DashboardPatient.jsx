@@ -22,7 +22,7 @@ const DashboardPatient = (props) => {
     const getPresc = async () => {
       try {
         const prescr = await axios.get(
-          `http://localhost:8080/api/patients/${props.patient.id}/ordonnances`
+          `${process.env.REACT_APP_API_URL}/api/patients/${props.patient.id}/ordonnances`
         );
         setLength(prescr.data.length);
         setPrescriptions(prescr.data);

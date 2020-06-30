@@ -33,14 +33,14 @@ const DashboardMedecin = (props) => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8080/api/patients")
+      .get(`${process.env.REACT_APP_API_URL}/api/patients`)
       .then((response) => response.data)
       .then((data) => {
         setPatientAll(data);
       });
 
     axios
-      .get(`http://localhost:8080/api/medecins/${props.medecin.id}/patients`)
+      .get(`${process.env.REACT_APP_API_URL}/api/medecins/${props.medecin.id}/patients`)
       .then((response) => response.data)
       .then((data) => {
         setPatientAllOfMedecin(data);
@@ -48,19 +48,6 @@ const DashboardMedecin = (props) => {
       });
   }, []);
 
-  /* const handleSelectPatient = (e) => {
-    setPatientSelectedId(Number(e.target.value));
-    axios
-      .get(`http://localhost:8080/api/patients/${e.target.value}`)
-      .then((response) => response.data)
-      .then((data) => {
-        props.changePatientFirstname(data[0].prenom);
-        props.changePatientLastname(data[0].nom);
-        props.changePatientId(data[0].id);
-        setPatientSelectedFirstname(data[0].prenom);
-        setPatientSelectedLastname(data[0].nom);
-      });
-  }; */
 
   const handleAddPatientFirstname = (e) => {
     setPatientAddFirstName(e.target.value);
@@ -77,7 +64,7 @@ const DashboardMedecin = (props) => {
   const handleAddMedoc = (e) => {
     e.preventDefault();
     axios
-      .post("http://localhost:8080/api/produits", { nom: medocToAdd })
+      .post(`${process.env.REACT_APP_API_URL}/api/produits`, { nom: medocToAdd })
       .then((res) => res.data)
       .then((res) => {
         alert("Medoc ajouté");
@@ -91,12 +78,12 @@ const DashboardMedecin = (props) => {
   const handleCreateOrdonnance = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:8080/api/ordonnances", {
+      await axios.post(`${process.env.REACT_APP_API_URL}/api/ordonnances`, {
         id_patient: props.patient.id,
         id_medecin: props.medecin.id,
       });
       const lastOrdoId = await axios.get(
-        "http://localhost:8080/api/ordonnances/last"
+        `${process.env.REACT_APP_API_URL}/api/ordonnances/last`
       );
       props.changeOrdonnancesId(lastOrdoId.data[0].id);
       props.history.push("/ordonnance-creation");
