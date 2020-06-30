@@ -1,11 +1,23 @@
-@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
-
-* {
-  font-family: "Roboto", sans-serif;
+.container {
+  height: 95vh;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
-html {
-  background-color: #f5f5f5;
+.dashboard {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.topPage {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
 }
 
 .topLeft {
@@ -15,13 +27,6 @@ html {
   justify-content: flex-end;
   align-items: center;
   margin-right: 10px;
-}
-
-.title {
-  color: #204357;
-  font-weight: 700;
-  font-size: 1.1rem;
-  margin-top: 15px;
 }
 
 .back {
@@ -35,8 +40,15 @@ html {
   box-shadow: 5px 5px 10px #cecece, -5px -5px 10px #ffffff;
 }
 
-.back:hover {
-  box-shadow: 10px 10px 15px #cecece, -10px -10px 5px #ffffff;
+.homeIcon {
+  width: 55%;
+}
+
+.title {
+  color: #204357;
+  font-weight: 700;
+  font-size: 1.1rem;
+  margin-top: 15px;
 }
 
 .prenom {
@@ -45,12 +57,19 @@ html {
   font-weight: 200;
 }
 
-.topPage {
-  width: 100%;
+.open {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 30px;
+  flex-direction: column;
+  align-items: flex-start;
+  /* justify-content: space-between; */
+  font-weight: 200;
+  padding: 15px;
+  border-radius: 20px;
+  background: #f2f2f2;
+  box-shadow: 5px 5px 10px #cecece, -5px -5px 10px #ffffff;
+  width: 100%;
+  height: 500px;
+  transition: width 1s, height 2s, transform 1s;
 }
 
 .close {
@@ -70,19 +89,10 @@ html {
   transition: width 2s, height 1s, transform 1s;
 }
 
-.open {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  /* justify-content: space-between; */
-  font-weight: 200;
-  padding: 15px;
-  border-radius: 20px;
-  background: #f2f2f2;
-  box-shadow: 5px 5px 10px #cecece, -5px -5px 10px #ffffff;
+.prescriptionInfosOpen {
   width: 100%;
-  height: 500px;
-  transition: width 1s, height 2s, transform 1s;
+  display: flex;
+  justify-content: space-between;
 }
 
 .prescriptionInfosClose {
@@ -94,14 +104,9 @@ html {
   width: 90%;
 }
 
-.close:hover {
-  box-shadow: 10px 10px 15px #cecece, -10px -10px 5px #ffffff;
-}
-
-.prescriptionInfosOpen {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
+.prescriptionTitle {
+  background: none;
+  color: #204357;
 }
 
 .prescriptionNumber {
@@ -114,41 +119,6 @@ html {
   margin-left: 60px;
 }
 
-.prescriptionTitle {
-  background: none;
-  color: #204357;
-}
-
-.drugHistory {
-  color: #204357;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  margin-top: 15px;
-  width: 100%;
-  height: 80px;
-  border-radius: 20px;
-  background: #f2f2f2;
-  box-shadow: 5px 5px 10px #cecece, -5px -5px 10px #ffffff;
-}
-
-.drugHistory:hover {
-  box-shadow: 10px 10px 15px #cecece, -10px -10px 5px #ffffff;
-}
-
-.subtitleEmergency {
-  color: orange;
-  font-size: 0.7rem;
-  font-weight: 200;
-  margin-top: -0.8rem;
-}
-
-.contentClose {
-  display: none;
-  opacity: 0;
-}
-
 .contentOpen {
   width: 100%;
   height: 30px;
@@ -159,11 +129,9 @@ html {
   opacity: 1;
 }
 
-.contentOpen div {
-  font-size: 0.8rem;
-  padding: 10px;
-  background: none;
-  border-radius: 10px;
+.contentClose {
+  display: none;
+  opacity: 0;
 }
 
 .prescriptionName {
@@ -188,34 +156,6 @@ html {
   font-weight: 200;
 }
 
-.reminder:hover {
-  box-shadow: 10px 10px 15px #cecece, -10px -10px 5px #ffffff;
-}
-
-.new {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-self: center;
-  width: 60%;
-  height: 100px;
-  margin-top: 15px;
-  border-radius: 20px;
-  background: #f2f2f2;
-  box-shadow: 5px 5px 10px #cecece, -5px -5px 10px #ffffff;
-  font-weight: 200;
-}
-
-.new:hover {
-  box-shadow: 10px 10px 15px #cecece, -10px -10px 5px #ffffff;
-}
-
-.notifTitle {
-  color: #204357;
-  margin-left: 15px;
-  margin-bottom: 10px;
-}
-
 .notifNumber {
   padding-top: 15px;
   padding-right: 15px;
@@ -227,18 +167,58 @@ html {
   margin-top: -0.5rem;
 }
 
-.dashboard {
-  width: 100%;
-  display: flex;
-  flex-wrap: wrap;
+.notifTitle {
+  color: #204357;
+  margin-left: 15px;
+  margin-bottom: 10px;
 }
 
-.container {
-  height: 95vh;
-  padding: 10px;
+.createOrdo {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  align-self: center;
+  width: 60%;
+  height: 100px;
+  margin-top: 15px;
+  margin-right: 15px;
+  border-radius: 20px;
+  background: #f2f2f2;
+  box-shadow: 5px 5px 10px #cecece, -5px -5px 10px #ffffff;
+  font-weight: 200;
+}
+
+.createDrug {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-self: center;
+  width: 30%;
+  height: 100px;
+  margin-top: 15px;
+  border-radius: 20px;
+  background: #f2f2f2;
+  box-shadow: 5px 5px 10px #cecece, -5px -5px 10px #ffffff;
+  font-weight: 200;
+}
+
+.ordoPlus {
+  padding-right: 15px;
+  padding-top: 15px;
+  color: #00bbdd;
+  font-size: 2.5em;
+  font-weight: 700;
+  margin-bottom: -1rem;
+  margin-top: -0.5rem;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.bottom {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-end;
 }
 
 .disconnect {
@@ -254,20 +234,38 @@ html {
   box-shadow: 5px 5px 10px #cecece, -5px -5px 10px #ffffff;
 }
 
-.disconnect:hover {
-  box-shadow: 10px 10px 15px #cecece, -10px -10px 5px #ffffff;
+.discoIcon {
+  width: 40%;
 }
 
-.bottom {
+.drugHistory {
+  color: #204357;
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
-  align-items: flex-end;
+  align-items: center;
+  justify-content: center;
+  margin-top: 15px;
+  width: 100%;
+  height: 80px;
+  border-radius: 20px;
+  background: #f2f2f2;
+  box-shadow: 5px 5px 10px #cecece, -5px -5px 10px #ffffff;
+}
+
+.subtitleEmergency {
+  color: orange;
+  font-size: 0.7rem;
+  font-weight: 200;
+  margin-top: -0.8rem;
 }
 
 @media screen and (min-width: 561px) {
-  .new {
+  .createOrdo {
     margin-top: 0;
+  }
+
+  .close {
+    align-items: flex-start;
   }
 
   .reminder {
@@ -277,12 +275,16 @@ html {
   .open {
     margin-bottom: 15px;
   }
-}
 
-.homeIcon {
-  width: 55%;
-}
+  .homeIcon {
+    width: 55%;
+  }
 
-.discoIcon {
-  width: 40%;
+  .discoIcon {
+    width: 40%;
+  }
+
+  .disconnect {
+    margin-top: 15px;
+  }
 }
