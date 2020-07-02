@@ -34,14 +34,14 @@ const Home = (props) => {
 
   useEffect(() => {
     axios
-      .get(`http://51.210.151.87/api/patients`)
+      .get(`${process.env.REACT_APP_API_URL}/api/patients`)
       .then((response) => response.data)
       .then((data) => {
         setPatientAll(data);
       });
 
     axios
-      .get(`http://51.210.151.87/api/medecins`)
+      .get(`${process.env.REACT_APP_API_URL}/api/medecins`)
       .then((response) => response.data)
       .then((data) => {
         setMedecinAll(data);
